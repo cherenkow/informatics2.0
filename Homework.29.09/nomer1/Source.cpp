@@ -3,15 +3,15 @@
 using namespace std;
 void printMenu()
 {
-    cout << "vibirete deistvie" << endl;
+    cout << "выберете действия" << endl;
     cout << "" << endl;
-    cout << "0 - vihod" << endl;
-    cout << "1 - dobavit element" << endl;
-    cout << "2 - vivesti massiv" << endl;
-    cout << "3 - naiti nomer max elementa" << endl;
-    cout << "4 - naiti min element" << endl;
-    cout << "5 - summa elementov massiva" << endl;
-    cout << "6 - vivvesti massiv v obratnom poryadke" << endl;
+    cout << "0 - выход" << endl;
+    cout << "1 - добавить элемент" << endl;
+    cout << "2 - вывести массив" << endl;
+    cout << "3 - нойти номер максимального элемента" << endl;
+    cout << "4 - найти минимальный элемент" << endl;
+    cout << "5 - сумма элементов массива " << endl;
+    cout << "6 - вывести массив в обратном порядкe" << endl;
     cout << endl;
 }
 
@@ -26,7 +26,7 @@ void maxEl(int*& arr, int& count)
             k += 1;
         }
     }
-    cout << "index max elementa: " << k << endl << endl;
+    cout << "индекс макс элемента: " << k << endl << endl;
 
 }
 
@@ -38,7 +38,7 @@ void minEl(int*& arr, int& count)
             t = arr[i];
         }
     }
-    cout << "min element: " << t << endl << endl;
+    cout << "минимальный элемент: " << t << endl << endl;
 
 }
 
@@ -83,7 +83,7 @@ void sumArray(int* arr, int length)
     {
         result += arr[i];
     }
-    cout << "summa elementov massiva: " << result << endl << endl;
+    cout << "сумма элементов массива: " << result << endl << endl;
 }
 
 int main()
@@ -102,7 +102,7 @@ int main()
         switch (choice)
         {
         case 1:
-            cout << "vvedite novii element" << endl;
+            cout << "введите новый элемент" << endl;
 
             if (count == cap) {
                 expandArray(a, cap);
