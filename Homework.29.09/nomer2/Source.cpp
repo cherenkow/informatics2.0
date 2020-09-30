@@ -10,7 +10,7 @@ void printMenu()
     cout << "2 - развернуть массив" << endl;
     cout << "3 - поменять эдементы массива в парах" << endl;
     cout << "4 - сдвиг вправо на один" << endl;
-    cout << "5 -развернуть две половинки массива" << endl;
+    cout << "5 - развернуть две половинки массива" << endl;
     cout << endl;
 }
 
@@ -65,10 +65,7 @@ void reverse(int* arr, int k, int count) {
 
 }
 
-void reverseN(int* arr, int& count) {
-    cout << "введите число разделяющее половинки массива" << endl << endl;
-    int x;
-    cin >> x;
+void reverseN(int* arr, int& count,int x) {
     if ((x >= count - 1) || (x <= 0)) {
         reverse(arr, 0, count - 1);
     }
@@ -96,10 +93,6 @@ void shiftArray(int* arr, int count) {
 }
 
 void switchCase(int choice, int& count, int& cap, int*& a) {
-    while (choice != 0)
-    {
-        printMenu();
-        cin >> choice;
         cout << endl;
         switch (choice)
         {
@@ -133,7 +126,10 @@ void switchCase(int choice, int& count, int& cap, int*& a) {
             cout << endl << endl;
             break;
         case 5:
-            reverseN(a, count);
+            cout << "введите число разделяющее половинки массива" << endl << endl;
+            int x;
+            cin >> x;
+            reverseN(a, count,x);
             printArray(a, count);
             cout << endl << endl;
             break;
@@ -143,7 +139,7 @@ void switchCase(int choice, int& count, int& cap, int*& a) {
 
 
     }
-}
+
 int main()
 {
     setlocale(LC_ALL, "Russian");
@@ -152,6 +148,11 @@ int main()
     int count = 0;
     int* a = new int[cap];
     int choice = -1;
-    switchCase(choice, count, cap, a);
+    while (choice != 0)
+    {
+        printMenu();
+        cin >> choice;
+        switchCase(choice, count, cap, a);
+    }
     return 0;
 }

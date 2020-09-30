@@ -59,10 +59,6 @@ void sortBubble(int* arr, int count) {
 	}
 }
 void switchCase(int choice, int& count, int& cap, int*& a) {
-	while (choice != 0)
-	{
-		printMenu();
-		cin >> choice;
 		cout << endl;
 		switch (choice)
 		{
@@ -94,7 +90,7 @@ void switchCase(int choice, int& count, int& cap, int*& a) {
 
 		}
 	}
-}
+
 int main()
 {
 	setlocale(LC_ALL, "Russian");
@@ -103,6 +99,11 @@ int main()
 	int count = 0;
 	int* a = new int[cap];
 	int choice = -1;
-	switchCase(choice, count, cap, a);
+	while (choice != 0)
+	{
+		printMenu();
+		cin >> choice;
+		switchCase(choice, count, cap, a);
+	}
 	return 0;
 }
