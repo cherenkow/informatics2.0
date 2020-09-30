@@ -41,27 +41,16 @@ void printArray(int* arr, int count)
     cout << "}" << endl;
 }
 
-void addEl(int*& arr, int& count, int& capacity)
+void addEl(int*& arr, int& count, int& capacity, int N, int A, int B)
 {
-    cout << "введите n, a, b" << endl;
-    int N;
-    int A;
-    int B;
-    cin >> N;
-    cin >> A;
-    cin >> B;
     int k = count;
     int c = capacity;
     for (int i = k; i < k + N; ++i) {
-        if (i < capacity) {
-            arr[i] = rand() % (B - A + 1) + A;
-            count++;
-        }
-        else if (i == capacity) {
+        if (i == capacity) {
             expandArray(arr, capacity);
-            arr[i] = rand() % (B - A + 1) + A;
-            count++;
         }
+        arr[i] = rand() % (B - A + 1) + A;
+        count++;
     }
 }
 
@@ -90,20 +79,11 @@ void reverseN(int* arr, int& count) {
 }
 
 void pairRev(int* arr, int count) {
-    if (count % 2 == 0) {
         for (int i = 0; i <= count - 2; i += 2) {
             int t = arr[i];
             arr[i] = arr[i + 1];
             arr[i + 1] = t;
         }
-    }
-    else {
-        for (int i = 0; i <= count - 3; i += 2) {
-            int t = arr[i];
-            arr[i] = arr[i + 1];
-            arr[i + 1] = t;
-        }
-    }
 }
 
 
@@ -115,14 +95,7 @@ void shiftArray(int* arr, int count) {
     arr[0] = t;
 }
 
-int main()
-{
-    setlocale(LC_ALL, "Russian");
-
-    int cap = 5;
-    int count = 0;
-    int* a = new int[cap];
-    int choice = -1;
+void switchCase(int choice, int& count, int& cap, int*& a) {
     while (choice != 0)
     {
         printMenu();
@@ -131,7 +104,14 @@ int main()
         switch (choice)
         {
         case 1:
-            addEl(a, count, cap);
+            cout << "введите n, a, b" << endl;
+            int N;
+            int A;
+            int B;
+            cin >> N;
+            cin >> A;
+            cin >> B;
+            addEl(a, count, cap, N, A, B);
             printArray(a, count);
             cout << endl << endl;
             break;
@@ -163,5 +143,15 @@ int main()
 
 
     }
+}
+int main()
+{
+    setlocale(LC_ALL, "Russian");
+
+    int cap = 5;
+    int count = 0;
+    int* a = new int[cap];
+    int choice = -1;
+    switchCase(choice, count, cap, a);
     return 0;
 }

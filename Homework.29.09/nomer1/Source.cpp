@@ -16,21 +16,25 @@ void printMenu()
 }
 
 
-void maxEl(int*& arr, int& count)
+int maxEl(int*& arr, int& count)
 {
     int t = arr[0];
-    int k = 0;
     for (int i = 1; i < count; ++i) {
         if (t < arr[i]) {
             t = arr[i];
-            k += 1;
         }
     }
-    cout << "индекс макс элемента: " << k << endl << endl;
+    for (int i = 0; i < count; ++i) {
+        if (t ==arr[i]) {
+            t = i;
+            break;
+        }
+    }
+    return t;
 
 }
 
-void minEl(int*& arr, int& count)
+int minEl(int*& arr, int& count)
 {
     int t = arr[0];
     for (int i = 1; i < count; ++i) {
@@ -38,7 +42,7 @@ void minEl(int*& arr, int& count)
             t = arr[i];
         }
     }
-    cout << "минимальный элемент: " << t << endl << endl;
+    return t;
 
 }
 
@@ -86,14 +90,7 @@ void sumArray(int* arr, int length)
     cout << "сумма элементов массива: " << result << endl << endl;
 }
 
-int main()
-{
-    setlocale(LC_ALL, "Russian");
-
-    int cap = 5;
-    int count = 0;
-    int* a = new int[cap];
-    int choice = -1;
+void switchCase(int choice,int& count, int& cap, int*& a) {
     while (choice != 0)
     {
         printMenu();
@@ -120,10 +117,10 @@ int main()
             cout << endl;
             break;
         case 3:
-            maxEl(a, count);
+            cout << "индекс макс элемента: " << maxEl(a, count) << endl << endl; ;
             break;
         case 4:
-            minEl(a, count);
+            cout << "минимальный элемент: " << minEl(a, count) << endl << endl;;
             break;
         case 5:
             sumArray(a, count);
@@ -133,5 +130,16 @@ int main()
         }
 
     }
+
+}
+int main()
+{
+    setlocale(LC_ALL, "Russian");
+
+    int cap = 5;
+    int count = 0;
+    int* a = new int[cap];
+    int choice = -1;
+    switchCase(choice,count,cap,a);
     return 0;
 }
