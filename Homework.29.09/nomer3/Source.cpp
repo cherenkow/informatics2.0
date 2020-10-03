@@ -58,38 +58,50 @@ void sortBubble(int* arr, int count) {
 		}
 	}
 }
-void switchCase(int choice, int& count, int& cap, int*& a) {
-		cout << endl;
-		switch (choice)
-		{
-		case 1:
-			cout << "введите новый элемент" << endl;
-			int x;
-			cin >> x;
-			if (count == cap) {
-				expandArray(a, cap);
-			}
-			else {
-				a[count] = x;
-				count++;
-			}
-			cout << endl;
 
-			break;
-		case 2:
-			printArray(a, count);
-			cout << endl;
-			break;
-		case 3:
-			int k = 0;
-			for (int i = 0; i < count; ++i) {
-				k += fact(a[i]);
-			};
-			cout << float(k) / count << endl << endl;
-			break;
-
+int countF(int* arr, int count) {
+	int k = fact(arr[0]);
+	int t = k;
+	for (int i = 1; i < count; ++i) {
+		if (arr[i] != arr[i - 1]) {
+			for (int j = arr[i - 1] + 1; j <= arr[i]; ++j) {
+				t *= j;
+			}
 		}
+		k += t;
 	}
+	return k;
+}
+
+void switchCase(int choice, int& count, int& cap, int*& a) {
+	cout << endl;
+	switch (choice)
+	{
+	case 1:
+		cout << "введите новый элемент" << endl;
+		int x;
+		cin >> x;
+		if (count == cap) {
+			expandArray(a, cap);
+		}
+		else {
+			a[count] = x;
+			count++;
+		}
+		cout << endl;
+
+		break;
+	case 2:
+		printArray(a, count);
+		cout << endl;
+		break;
+	case 3:
+		sortBubble(a, count);
+		cout << float(countF(a,count)) / count << endl << endl;
+		break;
+
+	}
+}
 
 int main()
 {
