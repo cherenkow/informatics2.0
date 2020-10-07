@@ -36,6 +36,7 @@ void expandArray(int*& arr)
 }
 
 void unify(int*& arr, int*& crr) {
+    /*
     int newCapacity = *(arr - 2) + *(crr - 2);
     int* temp = new int[newCapacity + 2];
     temp += 2;
@@ -66,9 +67,19 @@ void unify(int*& arr, int*& crr) {
     arr -= 2;
     delete[] arr;
     arr = temp;
+*/
+
+// 1 0 1 0 1 0  1 x 1 x 1 x 1 x 
+
+    int newCapacity = *(arr - 2) + *(crr - 2);
+    int* temp = new int[newCapacity + 2];
+    temp += 2;
+    for (int i = 0; i < newCapacity; ++i) {
+        if (i%2==0 && i-1<)
+    }
+
 
 }
-
 void printArray(int* arr)
 {
     cout << "{ ";
