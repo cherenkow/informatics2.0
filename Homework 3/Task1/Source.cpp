@@ -127,7 +127,7 @@ void insert(int*& arr, int n, int x) {
     arr[n] = x;
 }
 
-void addArray(int*& arr, int* brr) {
+void addArray(int*& arr, int*& brr) {
     if (*(arr - 2) + *(brr - 2) >= *(brr - 1)) {
         expandArray(arr);
     }
@@ -195,20 +195,27 @@ int seqSearch(int* arr, int* drr) {
 
     }
 }
-void switchCase(int choice, int*& a) {
+void switchCase(int choice, int*& a, int*& b, int* c) {
     cout << endl;
     switch (choice)
     {
-    case 1:
+    case 1: {
+        cout << "выберете: 1 или 2 массив ?" << endl;
+        int c1;
+        cin >> c1;
         cout << "сколько чисел ввести?" << endl;
         int n;
         cin >> n;
         cout << "введите числа" << endl << endl;
-        keyboard(a, n);
-        printArray(a);
+        (c1 == 1 ? keyboard(a, n) :keyboard(b, n));
+        (c1 == 1 ? printArray(a) : printArray(b));
         cout << endl << endl;
+    }
         break;
     case 2:
+        cout << "выберете: 1 или 2 массив ?" << endl;
+        int c2;
+        cin >> c2;
         cout << "введите n, a, b" << endl;
         int N;
         int A;
@@ -216,49 +223,43 @@ void switchCase(int choice, int*& a) {
         cin >> N;
         cin >> A;
         cin >> B;
-        addEl(a, N, A, B);
-        printArray(a);
+        (c2 == 1 ? addEl(a, N, A, B): addEl(b, N, A, B) );
+        (c2 == 1 ? printArray(a) : printArray(b));
         cout << endl << endl;
         break;
 
-    case 3:
-        printArray(a);
+    case 3: 
+        cout << "выберете: 1 или 2 массив ?" << endl;
+        int c3;
+        cin >> c3;
+        (c3 == 1 ? printArray(a) : printArray(b));
         cout << endl << endl;
         break;
     case 4:
+        cout << "выберете: 1 или 2 массив ?" << endl;
+        int c4;
+        cin >> c4;
         cout << "какой элемент найти?" << endl;
         int x;
         cin >> x;
-        cout << "индекс искомого элеемнта:" << elementSearch(a, x);
+        cout << "индекс искомого элеемнта:" << (c4 == 1 ? elementSearch(a,x) : elementSearch(b,x));
         cout << endl << endl;
         break;
     case 5: {
-        cout << "сколько элементов добавить?" << endl;
+        cout << "введите: к какому массиву добавляем другой массив?" << endl;
         int l;
         cin >> l;
-        int* brr = new int[l];
-        brr += 2;
-        *(brr - 2) = 0;
-        *(brr - 1) = l;
-        cout << "введите новые элементы" << endl;
-        keyboard(brr, l);
-        addArray(a, brr);
-        printArray(a);
+        (l == 1 ? addArray(a, b) : addArray(b, a));
+        (l == 1 ? printArray(a) : printArray(b));
         cout << endl << endl;
     }
           break;
     case 6: {
-        cout << "сколько элементов во втором массиве" << endl;
+        cout << "введите: с какого массива начинаем объединение?" << endl;
         int k;
         cin >> k;
-        int* crr = new int[k];
-        crr += 2;
-        *(crr - 2) = 0;
-        *(crr - 1) = k;
-        cout << "введите элементы массива" << endl;
-        keyboard(crr, k);
-        unify(a, crr);
-        printArray(a);
+        (k == 1 ? unify(a, b) : unify(b, a));
+        (k == 1 ? printArray(a) : printArray(b));
         cout << endl << endl;
     }
           break;
@@ -274,6 +275,9 @@ void switchCase(int choice, int*& a) {
         cout << endl << endl;
         break;
     case 8:
+        cout << "введите: из какого массива удаляем?";
+        int c8;
+        cin >> c8;
         cout << "введите индекс первого удаляемого элемента" << endl;
         int si;
         cin >> si;
@@ -281,24 +285,23 @@ void switchCase(int choice, int*& a) {
         int count;
         cin >> count;
         deleteGroup(a, si, count);
-        printArray(a);
+        (c8 == 1 ? deleteGroup(a, si, count) : deleteGroup(b, si, count));
+        (c8 == 1 ? printArray(a) : printArray(b));
         cout << endl << endl;
         break;
     case 9:
+        cout << "введите: в каком массиве ищем?";
+        int c9;
+        cin >> c9;
         cout << "сколько элементов в искомой последовательности?" << endl;
         int m;
         cin >> m;
-        int* drr = new int[m];
-        drr += 2;
-        *(drr - 2) = 0;
-        *(drr - 1) = m;
         cout << "введите элементы последовательности" << endl;
-        keyboard(drr, m);
-        cout << seqSearch(a, drr);
+        keyboard(c, m);
+       cout <<  (c9 == 1 ? seqSearch(a,c) : seqSearch(b, c));
+        deleteGroup(c, 0, m);
         cout << endl << endl;
         break;
-
-
     }
 
 
@@ -312,12 +315,27 @@ int main()
     a += 2;
     *(a - 2) = 0;
     *(a - 1) = 5;
+    int* b = new int[5 + 2];
+    b += 2;
+    *(b - 2) = 0;
+    *(b - 1) = 5;
+    int* c = new int[5 + 2];
+    c += 2;
+    *(c - 2) = 0;
+    *(c - 1) = 5;
     int choice = -1;
     while (choice != 0)
     {
         printMenu();
         cin >> choice;
-        switchCase(choice, a);
+        switchCase(choice, a, b, c );
     }
+   
+    a -= 2;
+    delete[] a;
+    b -= 2;
+    delete[] b;
+    c -= 2;
+    delete[] c;
     return 0;
 }
