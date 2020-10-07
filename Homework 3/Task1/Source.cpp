@@ -1,6 +1,8 @@
 #include<iostream>
 #include<clocale>
+
 using namespace std;
+
 void printMenu()
 {
     cout << "выберете действие" << endl;
@@ -17,8 +19,6 @@ void printMenu()
     cout << "9 - поиск подпоследовательности" << endl;
     cout << endl;
 }
-
-
 
 void expandArray(int*& arr)
 {
@@ -68,7 +68,6 @@ void unify(int*& arr, int*& crr) {
     arr = temp;
 
 }
-
 
 void printArray(int* arr)
 {
@@ -195,6 +194,7 @@ int seqSearch(int* arr, int* drr) {
 
     }
 }
+
 void switchCase(int choice, int*& a, int*& b, int* c) {
     cout << endl;
     switch (choice)
@@ -227,7 +227,6 @@ void switchCase(int choice, int*& a, int*& b, int* c) {
         (c2 == 1 ? printArray(a) : printArray(b));
         cout << endl << endl;
         break;
-
     case 3: 
         cout << "выберете: 1 или 2 массив ?" << endl;
         int c3;
@@ -303,8 +302,6 @@ void switchCase(int choice, int*& a, int*& b, int* c) {
         cout << endl << endl;
         break;
     }
-
-
 }
 
 int main()
