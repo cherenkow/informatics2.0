@@ -2,7 +2,6 @@
 
 ArrayList::ArrayList()
 {
-	//printf("Default constructor call\n");
 	capacity = 10;
 	count = 0;
 	data = new int[10];
@@ -10,7 +9,6 @@ ArrayList::ArrayList()
 
 ArrayList::ArrayList(int cap)
 {
-	//printf("Parametrized constructor call\n");
 	capacity = cap;
 	count = 0;
 	data = new int[cap];
@@ -18,7 +16,6 @@ ArrayList::ArrayList(int cap)
 
 ArrayList::~ArrayList()
 {
-	//printf("Destructor call %d\n", capacity);
 	delete[] data;
 }
 bool ArrayList::add(int el) {
@@ -37,18 +34,12 @@ bool ArrayList::add(int index, int el) {
 	if (index > count || index < 0) {
 		return false;
 	}
-	else if (index == count) {
-		add(el);
-		return true;
+	for (int i = count; i > index; --i) {
+		data[i] = data[i - 1];
 	}
-	else {
-		for (int i = count; i > index; --i) {
-			data[i] = data[i - 1];
-		}
-		data[index] = el;
-		count++;
-		return true;
-	}
+	data[index] = el;
+	count++;
+	return true;
 }
 
 bool ArrayList::addAll(ArrayList& list) {
@@ -63,9 +54,6 @@ bool ArrayList::addAll(int index, ArrayList& list) {
 		return false;
 	}
 	else {
-		if (count + list.capacity > capacity) {
-			expand(data, capacity);
-		}
 		if (index == count) {
 			addAll(list);
 		}
@@ -139,7 +127,7 @@ bool ArrayList::remove(int index) {
 	if (index < 0 || index > count || count == 0) {
 		return false;
 	}
-	int* temp = new int[count-1];
+	int* temp = new int[count - 1];
 	for (int i = 0; i < index; ++i) {
 		temp[i] = data[i];
 	}
@@ -165,7 +153,7 @@ void ArrayList::expand(int*& data, int& capacity)
 	data = newData;
 }
 
-bool ArrayList::swap(int i1, int i2){
+bool ArrayList::swap(int i1, int i2) {
 	if (i1 > count || i1 < 0 || i2 > count || i2 < 0) {
 		return false;
 	}
