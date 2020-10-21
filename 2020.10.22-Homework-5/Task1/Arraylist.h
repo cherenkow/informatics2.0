@@ -15,7 +15,7 @@ public:
 
 private:
 	void expand();
-	int numLength(int number);
+	int digitCount(int number);
 	void addSymbolToStr(int& index, char symbol);
 	void addNumberToStr(int& index, int number);
 
@@ -48,14 +48,9 @@ public:
 
 	int length();
 
-	bool addP();
+	bool addRandomPositive(int max = 99, int min = 10);
 
-	bool addN();
-
-	bool change();
+	bool addRandomNegative(int max = 99, int min = 10);
 
 	bool mix();
-
-	bool positive();
-
 };

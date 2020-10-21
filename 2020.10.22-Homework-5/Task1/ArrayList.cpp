@@ -4,6 +4,7 @@
 ArrayList::~ArrayList()
 {
 	delete[] data;
+	delete[] str;
 }
 
 bool ArrayList::add(int el) {
@@ -27,7 +28,7 @@ void ArrayList::expand()
 	data = newData;
 }
 
-int  ArrayList::numLength(int number) {
+int  ArrayList::digitCount(int number) {
 	int k = 1;
 	if (number < 0) {
 		number *= -1;
@@ -45,7 +46,7 @@ void  ArrayList::addSymbolToStr(int& index, char symbol) {
 }
 
 void  ArrayList::addNumberToStr(int& index, int number) {
-	int length = numLength(number);
+	int length = digitCount(number);
 	if (number < 0) {
 		addSymbolToStr(index, '-');
 		number *= (-1);
@@ -84,19 +85,13 @@ bool ArrayList::addAll(int index, ArrayList& list) {
 	if (index<0 || index>count) {
 		return false;
 	}
-	else {
-		if (index == count) {
-			addAll(list);
-		}
-		else {
-			for (int i = 0; i < list.capacity; ++i) {
-				add(index, list.data[i]);
-				index++;
-			}
-		}
-		return true;
+	for (int i = 0; i < list.capacity; ++i) {
+		add(index, list.data[i]);
+		index++;
 	}
+	return true;
 }
+
 
 void ArrayList::clear() {
 	int* temp = new int[capacity];
@@ -139,62 +134,69 @@ int ArrayList::indexOf(int el) {
 }
 
 bool ArrayList::isEmpty() {
-	if (count != 0) {
-		return true;
-	}
-	return false;
+	return(count == 0);
 }
 
 char* ArrayList::toString() {
-	if (str != nullptr) {
-		delete[] str;
-		str = nullptr;
-	}
-
-	int index = 0;
-	int length = 0;
-	for (int i = 0; i < count; ++i) {
-		if (data[i] < 0) {
-			length += 1;
+	if (isEmpty() == false) {
+		if (str != nullptr) {
+			delete[] str;
+			str = nullptr;
 		}
-		length += numLength(data[i]);
-	}
-	//третье слагаемое - запятые с пробелами, четвертое - скобки, слэш,\0 и пробел 
-	length += numLength(capacity) + numLength(count) + 2 * (count - 1) + 7; 
-	str = new char[length];
-	addSymbolToStr(index, '[');
-	addNumberToStr(index, count);
-	addSymbolToStr(index, '/');
-	addNumberToStr(index, capacity);
-	addSymbolToStr(index, ']');
-	addSymbolToStr(index, ' ');
-	addSymbolToStr(index, '{');
 
-	for (int i = 0; i < count - 1; ++i) {
-		addNumberToStr(index, data[i]);
-		addSymbolToStr(index, ',');
+		int index = 0;
+		int length = 0;
+		for (int i = 0; i < count; ++i) {
+			if (data[i] < 0) {
+				length += 1;
+			}
+			length += digitCount(data[i]);
+		}
+		length += digitCount(capacity) + digitCount(count) + 2 * (count - 1) + 7;
+		str = new char[length];
+		addSymbolToStr(index, '[');
+		addNumberToStr(index, count);
+		addSymbolToStr(index, '/');
+		addNumberToStr(index, capacity);
+		addSymbolToStr(index, ']');
 		addSymbolToStr(index, ' ');
+		addSymbolToStr(index, '{');
+
+		for (int i = 0; i < count - 1; ++i) {
+			addNumberToStr(index, data[i]);
+			addSymbolToStr(index, ',');
+			addSymbolToStr(index, ' ');
+		}
+		addNumberToStr(index, data[count - 1]);
+		addSymbolToStr(index, '}');
+		addSymbolToStr(index, '\0');
 	}
-	addNumberToStr(index, data[count - 1]);
-	addSymbolToStr(index, '}');
-	addSymbolToStr(index, '\0');
+	else {
+		if (str != nullptr) {
+			delete[] str;
+			str = nullptr;
+		}
+		int index = 0;
+		str = new char[6];
+		addSymbolToStr(index, 'E');
+		addSymbolToStr(index, 'M');
+		addSymbolToStr(index, 'P');
+		addSymbolToStr(index, 'T');
+		addSymbolToStr(index, 'Y');
+		addSymbolToStr(index, '\0');
+	}
 	return str;
+
 }
 
 bool ArrayList::remove(int index) {
-	if (index < 0 || index > count || count == 0) {
+	if (index < 0 || index > count - 1) {
 		return false;
 	}
-	int* temp = new int[count - 1];
-	for (int i = 0; i < index; ++i) {
-		temp[i] = data[i];
-	}
 	for (int i = index; i < count - 1; ++i) {
-		temp[i] = data[i + 1];
+		data[i] = data[i + 1];
 	}
 	count--;
-	delete[] data;
-	data = temp;
 	return true;
 
 }
@@ -213,53 +215,30 @@ int ArrayList::length() {
 	return count;
 }
 
-bool ArrayList::addP() {
+bool ArrayList::addRandomPositive(int max, int min) {
 	if (count + 10 > capacity) {
 		expand();
 	}
 	for (int i = 0; i < 10; ++i) {
-		int a = rand() % (99 - 10 + 1) + 10;
+		int a = rand() % (max - min + 1) + min;
 		add(a);
 	}
 	return true;
 }
 
-bool ArrayList::addN() {
+bool ArrayList::addRandomNegative(int max, int min) {
 	if (count + 10 > capacity) {
 		expand();
 	}
 	for (int i = 0; i < 10; ++i) {
-		int a = rand() % (99 - 10 + 1) + 10;
-		add(a*(-1));
+		int a = rand() % (max - min + 1) + min;
+		add(a * (-1));
 	}
 	return true;
 }
 
-bool ArrayList::change() {
-	if (count < 2) {
-		return false;
-	}
-	int k = data[0];
-	int ik = 0;
-	int x = data[0];
-	int ix = 0;
-	for (int i = 1; i < count; ++i) {
-		if (k > data[i]) {
-			k = data[i];
-			ik = i;
-		}
-	}
-	for (int i = 1; i < count; ++i) {
-		if (x <= data[i]) {
-			x = data[i];
-			ix = i;
-		}
-	}
-	return swap(ix, ik);
-}
-
 bool ArrayList::mix() {
-	if (count <1) {
+	if (count < 1) {
 		return false;
 	}
 	for (int i = 0; i < count; ++i) {
@@ -274,14 +253,4 @@ bool ArrayList::mix() {
 	return true;
 }
 
-bool ArrayList::positive() {
-	if (count == 0) {
-		return false;
-	}
-	for (int i = 0; i < count; ++i) {
-		if (data[i] < 0) {
-			data[i] = 0;
-		}
-	}
-	return true;
-}
+

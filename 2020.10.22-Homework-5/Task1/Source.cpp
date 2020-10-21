@@ -35,15 +35,15 @@ void switchCase(int choice, ArrayList& a) {
 	printf("\n");
 	switch (choice)
 	{
-	case 1:
+	case 1: {
 		printf("введите новый элемент:\n");
 		int el1;
 		std::cin >> el1;
 		a.add(el1);
 		std::cout << a.toString() << std::endl << std::endl;
-
-		break;
-	case 2:
+	}
+		  break;
+	case 2: {
 		printf("введите новый элемент:\n");
 		int el2;
 		std::cin >> el2;
@@ -52,7 +52,8 @@ void switchCase(int choice, ArrayList& a) {
 		std::cin >> ix;
 		a.add(ix, el2);
 		std::cout << a.toString() << std::endl << std::endl;
-		break;
+	}
+		  break;
 	case 3: {
 		printf("сколько элементов в добавляемом списке? \n");
 		int k;
@@ -68,8 +69,7 @@ void switchCase(int choice, ArrayList& a) {
 		std::cout << a.toString() << std::endl << std::endl;
 	}
 		  break;
-	case 4:
-	{
+	case 4: {
 		printf("сколько элементов в добавляемом списке? \n");
 		int kk;
 		std::cin >> kk;
@@ -86,19 +86,21 @@ void switchCase(int choice, ArrayList& a) {
 		a.addAll(ii, list1);
 		std::cout << a.toString() << std::endl << std::endl;
 	}
-	break;
-	case 5:
-		printf("елементы удалены\n");
+		  break;
+	case 5: {
+		printf("элементы удалены\n");
 		a.clear();
 		std::cout << a.toString() << std::endl << std::endl;
-		break;
-	case 6:
+	}
+		  break;
+	case 6: {
 		printf("введите искомый элемент: \n");
 		int el5;
 		std::cin >> el5;
 		printf("%d\n", a.contains(el5));
-		break;
-	case 7:
+	}
+		  break;
+	case 7: {
 		printf("введите индекс:\n");
 		int index;
 		std::cin >> index;
@@ -108,8 +110,9 @@ void switchCase(int choice, ArrayList& a) {
 		else {
 			printf("ошибка; попробуйте еще раз\n");
 		}
-		break;
-	case 8:
+	}
+		  break;
+	case 8: {
 		printf("введите искомый элемент: \n");
 		int el6;
 		std::cin >> el6;
@@ -119,24 +122,27 @@ void switchCase(int choice, ArrayList& a) {
 		else {
 			printf("ошибка; попробуйте еще раз\n");
 		}
-		break;
-	case 9:
-		if (a.isEmpty() == true) {
-			printf("list is NOT EMPTY\n");
+	}
+		  break;
+	case 9: {
+		if (a.isEmpty() == false) {
+			printf("NOT EMPTY\n");
 		}
 		else {
-			printf("list is EMPTY\n");
+			printf("EMPTY\n");
 		}
-		break;
-	case 10:
-		if (a.isEmpty() == false) {
-			printf("list is EMPTY\n");
+	}
+		  break;
+	case 10: {
+		if (a.isEmpty() == true) {
+			printf("EMPTY\n");
 		}
 		else {
 			std::cout << a.toString() << std::endl << std::endl;
 		}
-		break;
-	case 11:
+	}
+		   break;
+	case 11: {
 		printf("введите индекс удаляемого элмента:\n");
 		int d;
 		std::cin >> d;
@@ -146,8 +152,9 @@ void switchCase(int choice, ArrayList& a) {
 		else {
 			printf("что-то пошло не так\n");
 		}
-		break;
-	case 12:
+	}
+		   break;
+	case 12: {
 		printf("введите индексы элментов:\n");
 		int in1;
 		std::cin >> in1;
@@ -159,8 +166,9 @@ void switchCase(int choice, ArrayList& a) {
 		else {
 			printf("что-то пошло не так\n");
 		}
-		break;
-	case 13:
+	}
+		   break;
+	case 13: {
 		printf("введите индекс элемента\n");
 		int ind;
 		std::cin >> ind;
@@ -173,33 +181,54 @@ void switchCase(int choice, ArrayList& a) {
 		else {
 			printf("что-то пошло не так\n");
 		}
-		break;
-	case 14:
-		a.addP();
+	}
+		   break;
+	case 14: {
+		a.addRandomPositive();
 		std::cout << a.toString() << std::endl << std::endl;
-		break;
-	case 15:
-		a.addN();
+	}
+		   break;
+	case 15: {
+		a.addRandomNegative();
 		std::cout << a.toString() << std::endl << std::endl;
-		break;
-	case 16:
-		if (a.change() == true) {
+	}
+		   break;
+	case 16: {
+		if (a.length() > 1) {
+			int k = a.get(0);
+			int ik = 0;
+			int x = k;
+			int ix = 0;
+			for (int i = 1; i < a.length(); ++i) {
+				if (k > a.get(i)) {
+					k = a.get(i);
+					ik = i;
+				}
+			}
+			for (int i = 1; i < a.length(); ++i) {
+				if (x <= a.get(i)) {
+					x = a.get(i);
+					ix = i;
+				}
+			}
+			a.swap(ix, ik);
 			std::cout << a.toString() << std::endl << std::endl;
 		}
 		else {
 			printf("что-то пошло не так\n");
 		}
-		break;
-	case 17:
-		if (a.positive() == true) {
-			std::cout << a.toString() << std::endl << std::endl;
+	}
+		   break;
+	case 17: {
+		for (int i = 0; i < a.length(); ++i) {
+			if (a.get(i) < 0) {
+				a.set(i, 0);
+			}
 		}
-		else {
-			printf("что-то пошло не так\n");
-		}
-		break;
-	case 18:
-
+		std::cout << a.toString() << std::endl << std::endl;
+	}
+		   break;
+	case 18: {
 		if (a.mix() == true) {
 			std::cout << a.toString() << std::endl << std::endl;
 		}
@@ -207,7 +236,8 @@ void switchCase(int choice, ArrayList& a) {
 			printf("что-то пошло не так\n");
 		}
 	}
-
+		   break;
+	}
 }
 
 int main()
