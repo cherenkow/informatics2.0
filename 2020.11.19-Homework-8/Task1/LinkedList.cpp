@@ -67,11 +67,16 @@ int LinkedList::extractHead() {
     if (head == nullptr) {
         return -1;
     }
-    Node* temp = head;
-    Node* node = temp;
     int k = head->data;
-    head = temp->next;
-    delete node;
+    if (count == 1) {
+        delete head;
+        head = tail = nullptr;
+    }
+    else {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+    }
     count--;
     return k;
 }
@@ -81,15 +86,22 @@ int LinkedList::extractTail() {
         return -1;
     }
     Node* temp = head;
-    for (int i = 1; i < count - 1; ++i) {
-        temp = temp->next;
+    if (count == 1) {
+       return extractHead();
     }
-    Node* node = temp->next;
-    int k = node->data;
-    delete node;
-    temp->next = nullptr;
-    tail = temp;
-    return k;
+    else {
+        Node* temp = head;
+        for (int i = 1; i < count - 1; ++i) {
+            temp = temp->next;
+        }
+        Node* node = temp->next;
+        int k = node->data;
+        delete node;
+        temp->next = nullptr;
+        tail = temp;
+        count--;
+        return k;
+    }
 }
 
 int LinkedList::extract(int index) {
@@ -118,19 +130,14 @@ void LinkedList::operator-= (int index) {
     extract(index);
 }
 
-LinkedList& LinkedList::operator= (const LinkedList list) {
-    if (head !=nullptr) {
-        while (head != nullptr) {
-            extractHead();
-        }
+LinkedList& LinkedList::operator= (const LinkedList& list) {
+    while (this->count > 0){
+        this->extractHead();
     }
-    Node* temp = list.head;
-    count = 0;
-    for (int i = 1; i < count; ++i){
-        addToTail(temp->data);
-        temp = temp->next;
+    for (Node* temp = list.head; temp != nullptr; temp = temp->next){
+        this->addToTail(temp->data);
     }
-return *this; 
+    return *this;
 }
 
 bool LinkedList::add(int index, int element)
@@ -266,8 +273,20 @@ bool LinkedList::swap(int index1, int index2) {
     if (index1 == index2 || count == 1) {
         return true;
     }
-    if (!indexValid(index1) || !indexValid(index2) || head == nullptr) {
+    else if (!indexValid(index1) || !indexValid(index2) || head == nullptr) {
         return false;
+    }
+    else if (index1 == 0 || index2 == 0) {
+        return (index1 == 0 ? swapHead(index2) : swapHead(index1));
+    }
+    else if (index1 == count - 1 || index2 == count - 1) {
+        return (index1 == count - 1 ? swapTail(index2) : swapTail(index1));
+    }
+    else if ((index1 == count - 1 && index2 == 0) || (index1 == 0 && index2 == count - 1)) {
+        return swapHeadAndTail();
+    }
+    else if ((index1 - index2 == 1 || index1 - index2 == -1)) {
+        return (index1<index2? swapBeside(index1): swapBeside(index2));
     }
     Node* temp1 = head;
     Node* temp2 = head;
@@ -277,19 +296,89 @@ bool LinkedList::swap(int index1, int index2) {
     for (int i = 1; i < index2; ++i) {
         temp2 = temp2->next;
     }
-    Node* node1 = temp1;
-    Node* node2 = temp2;
-    temp1 = temp1->next;
-    temp2 = temp2->next;
+    Node* node1 = temp1->next->next;
+    Node* node2 = temp2->next;
 
-    Node* node11 = node1;
-    Node* node22 = temp2;
-    node1->next = node2->next;
+    temp1->next->next = temp2->next->next;
     temp2->next = temp1->next;
-    node2->next = node11->next;
-    temp1->next = node22->next;
+    node2->next = node1;
+    temp1->next = node2;
+
     return true;
 
+}
+
+bool LinkedList::swapHead(int index) {
+    Node* temp = head;
+    if (index == 1) {
+        temp = temp->next; // то что вставляем
+        head->next = head->next->next;
+        temp->next = head;
+        head = temp;
+        return true;
+    }
+    // дошли до предыдущего по индексу
+    for (int i = 1; i < index; ++i) {
+        temp = temp->next;
+    }
+    Node* temp2 = head->next;
+    Node* temp3 = temp->next; // то что надо вставить 
+    head->next = temp->next->next;
+    temp->next = head;
+    head = temp3;
+    head->next = temp2;
+    return true;
+}
+
+bool LinkedList::swapTail(int index) { 
+    Node* temp = head;
+    Node* temp2 = head;
+    for (int i = 1; i < index; ++i) { //дошли до предыдущего по индексу
+        temp2 = temp2->next;
+    }
+    Node* node = temp2->next;
+    if (index == count - 2) {
+        tail->next = temp2->next;
+        temp2->next->next = nullptr;
+        temp2->next = tail;
+        tail = node;
+        return true;
+    }
+    for (int i = 1; i < count-1; ++i) { // дошли до предпоследнего 
+        temp = temp->next;
+    }
+    temp->next = node;
+    tail->next = node->next;
+    node->next = nullptr;
+    temp2->next = tail;
+    tail = node;
+    return true;
+}
+
+bool LinkedList::swapHeadAndTail() {
+    Node* temp = head;
+    Node* temp2 = head->next;
+    for (int i = 1; i < count - 1; ++i) { // дошли до предпоследнего 
+        temp = temp->next;
+    }
+    head->next = nullptr;
+    temp->next = head;
+    tail->next = temp2;
+    head = tail;
+    tail = temp->next;
+    return true;
+}
+
+bool LinkedList::swapBeside(int index) {
+    Node* temp = head;
+    for (int i = 1; i < index; ++i) {
+        temp = temp->next;
+    }
+    Node* node = temp->next->next;
+    temp->next->next = node->next;
+    node->next = temp->next;
+    temp->next = node;
+    return true;
 }
 
 std::ostream& operator<<(std::ostream& stream, const LinkedList list)

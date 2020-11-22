@@ -39,35 +39,27 @@ public:
 
 	friend std::ostream& operator<<(std::ostream& stream, const LinkedList list);
 
-	
 	int extractHead();
 
-	
 	int extractTail();
-
 
 	int extract(int index);
 
 	void operator-=(int element);
 
-	LinkedList& operator=(LinkedList);
+	LinkedList& operator=(const LinkedList& list);
 
-	
 	int indexOf(int element);
-
-	/// <summary>
-	/// содержится ли элемент в списке. в функции нужно обойтись одной строкой
-	/// </summary>
-	/// <param name="">значение элемента</param>
+	
 	bool contains(int element);
 
-	/// <summary>
-	/// поменять два элемента местами.
-	/// Переписывать значения элементов нельзя.
-	/// Можно только менять значения полей next.
-	/// </summary>
-	/// <param name="">индекс первого элемента</param>
-	/// <param name="">индекс второго элемента</param>
-	/// <returns>false - если индексы были некорректны</returns>
-	bool swap(int, int);
+	bool swap(int index1, int index2);
+private:
+	bool swapHead(int index);
+
+	bool swapTail(int index);
+	
+	bool swapHeadAndTail();
+
+	bool swapBeside(int index);
 };
