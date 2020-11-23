@@ -131,11 +131,13 @@ void LinkedList::operator-= (int index) {
 }
 
 LinkedList& LinkedList::operator= (const LinkedList& list) {
-    while (this->count > 0){
-        this->extractHead();
-    }
-    for (Node* temp = list.head; temp != nullptr; temp = temp->next){
-        this->addToTail(temp->data);
+    if (&list != this) {
+        while (this->count > 0) {
+            this->extractHead();
+        }
+        for (Node* temp = list.head; temp != nullptr; temp = temp->next) {
+            this->addToTail(temp->data);
+        }
     }
     return *this;
 }
