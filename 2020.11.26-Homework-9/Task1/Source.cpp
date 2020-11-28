@@ -141,6 +141,10 @@ int readInt(string& str) {
 			resolveError(4);
 			continue;
 		}
+		else {
+			resolveError(6);
+			resolveError(4);
+		}
 	}
 }
 
