@@ -35,8 +35,10 @@ void printMatrix(int** matrix, int dimention)
 
 int main()
 {
-	int n = 6;
-
+	setlocale(LC_ALL, "Russian");
+	int n = 0;
+	cout << "введите размер матрицы" << endl;
+	cin >> n;
 	int** a = initMatrix(n);
 	int** b = initMatrix(n);
 	int** c = initMatrix(n);
@@ -100,54 +102,38 @@ int main()
 
 	int num = 1;
 	int mod = 0;
-	while (num != n * n) {
-		if (mod % 4 == 0) {
-			int i = mod / 4;
-			for (int j = i; j < n - i; ++j) {
-				e[i][j] = num;
-				num += 1;
-				if (num == n * n + 1) {
-					break;
-				}
-			}
-			mod += 1;
+	while (num <= n * n) {
+
+		int  i = mod / 4;
+		for (int j = i; j < n - i; ++j) {
+			e[i][j] = num;
+			num += 1;
 		}
-		if (mod % 4 == 1) {
-			int j = n - 1 - mod / 4;
-			for (int i = 1 + mod / 4; i < n - mod / 4; ++i) {
-				e[i][j] = num;
-				num += 1;
-				if (num == n * n + 1) {
-					break;
-				}
-			}
-			mod += 1;
+		mod += 1;
+
+		int j = n - 1 - mod / 4;
+		for (int i = 1 + mod / 4; i < n - mod / 4; ++i) {
+			e[i][j] = num;
+			num += 1;
 		}
-		if (mod % 4 == 2) {
-			int i = n - 1 - mod / 4;
-			for (int j = n - 2 - mod / 4; j >= mod / 4; --j) {
-				e[i][j] = num;
-				num += 1;
-				if (num == n * n + 1) {
-					break;
-				}
-			}
-			mod += 1;
+		mod += 1;
+
+		i = n - 1 - mod / 4;
+		for (int j = n - 2 - mod / 4; j >= mod / 4; --j) {
+			e[i][j] = num;
+			num += 1;
 		}
-		if (mod % 4 == 3) {
-			int j = mod/4;
-			for (int i = n - 2 - mod / 4; i > mod / 4;--i) {
-				e[i][j] = num;
-				num += 1;
-				if (num == n * n + 1) {
-					break;
-				}
-			}
-			mod += 1;
+		mod += 1;
+
+		j = mod / 4;
+		for (int i = n - 2 - mod / 4; i > mod / 4; --i) {
+			e[i][j] = num;
+			num += 1;
 		}
+		mod += 1;
+
 	}
-
 	printMatrix(e, n);
-
+	freeMatrix(e, n);
 	return 0;
 }
