@@ -72,83 +72,93 @@ T1 calc(T1 a, T2 b, char s) {
 int main(int argc, char* argv[]) {
 	int c = -1;
 	char s;
-	for (int i = 0; i < argc; ++i) {
-		if (argv[i] == "+") {
-			c = i;
-			s = '+';
+	if (argc == 7) {
+		for (int i = 0; i < argc; ++i) {
+			if (argv[i] == "+") {
+				c = i;
+				s = '+';
+			}
+			else if (argv[i] == "-") {
+				c = i;
+				s = '-';
+			}
+			else if (argv[i] == "*") {
+				c = i;
+				s = '*';
+			}
+			else if (argv[i] == "/") {
+				c = i;
+				s = '/';
+			}
+			else if (i == argc - 1 && c < 0) {
+				cout << "error" << endl;
+			}
 		}
-		else if (argv[i] == "-") {
-			c = i;
-			s = '-';
+		if (c == 2) {
+			if (floatCheck(argv[4]) == 1 && floatCheck(argv[6]) == 1) {
+				cout << "result " << calc(atof(argv[4]), atof(argv[6]), s);
+			}
+			else if (floatCheck(argv[4]) == 1 && floatCheck(argv[6]) == 0) {
+				cout << "result " << calc(atof(argv[4]), atoi(argv[6]), s);
+			}
+			else if (floatCheck(argv[4]) == 0 && floatCheck(argv[6]) == 1) {
+				cout << "result " << calc(atoi(argv[4]), atof(argv[6]), s);
+			}
+			else if (floatCheck(argv[4]) == 0 && floatCheck(argv[6]) == 0) {
+				cout << "result " << calc(atoi(argv[4]), atoi(argv[6]), s);
+			}
 		}
-		else if (argv[i] == "*") {
-			c = i;
-			s = '*';
+
+		if (c == 4) {
+			if (floatCheck(argv[2]) == 1 && floatCheck(argv[6]) == 1) {
+				cout << "result " << calc(atof(argv[2]), atof(argv[6]), s);
+			}
+			else if (floatCheck(argv[2]) == 1 && floatCheck(argv[6]) == 0) {
+				cout << "result " << calc(atof(argv[2]), atoi(argv[6]), s);
+			}
+			else if (floatCheck(argv[2]) == 0 && floatCheck(argv[6]) == 1) {
+				cout << "result " << calc(atoi(argv[2]), atof(argv[6]), s);
+			}
+			else if (floatCheck(argv[2]) == 0 && floatCheck(argv[6]) == 0) {
+				cout << "result " << calc(atoi(argv[2]), atoi(argv[6]), s);
+			}
 		}
-		else if (argv[i] == "/") {
-			c = i;
-			s = '/';
+		if (c == 6) {
+			if (floatCheck(argv[2]) == 1 && floatCheck(argv[4]) == 1) {
+				cout << "result " << calc(atof(argv[2]), atof(argv[4]), s);
+			}
+			else if (floatCheck(argv[2]) == 1 && floatCheck(argv[4]) == 0) {
+				cout << "result " << calc(atof(argv[2]), atoi(argv[4]), s);
+			}
+			else if (floatCheck(argv[2]) == 0 && floatCheck(argv[4]) == 1) {
+				cout << "result " << calc(atoi(argv[2]), atof(argv[4]), s);
+			}
+			else if (floatCheck(argv[2]) == 0 && floatCheck(argv[4]) == 0) {
+				cout << "result " << calc(atoi(argv[2]), atoi(argv[4]), s);
+			}
 		}
-		else if (i == argc-1 && c<0){
+		if (c < 0) {
+			cout << "error" << endl;
+			cout << "error" << endl;
+			cout << "error" << endl;
+			cout << "error" << endl;
+			cout << "error" << endl;
+			cout << "error" << endl;
+			cout << "error" << endl;
+			cout << "error" << endl;
 			cout << "error" << endl;
 		}
 	}
-	if (c == 2) {
-		if (floatCheck(argv[4]) == 1 && floatCheck(argv[6]) == 1) {
-			cout << "result " << calc(atof(argv[2]), atof(argv[6]), s);
-		}
-		else if (floatCheck(argv[4]) == 1 && floatCheck(argv[6]) == 0) {
-			cout << "result " << calc(atof(argv[2]), atoi(argv[6]), s);
-		}
-		else if (floatCheck(argv[4]) == 0 && floatCheck(argv[6]) == 1) {
-			cout << "result " << calc(atoi(argv[2]), atof(argv[6]), s);
-		}
-		else if (floatCheck(argv[4]) == 0 && floatCheck(argv[6]) == 0) {
-			cout << "result " << calc(atof(argv[2]), atof(argv[6]), s);
-		}
+	else {
+		cout << "error" << endl;
+		cout << "error" << endl;
+		cout << "error" << endl;
+		cout << "error" << endl;
+		cout << "error" << endl;
+		cout << "error" << endl;
+		cout << "error" << endl;
+		cout << "error" << endl;
+		cout << "error" << endl;
 	}
-	if (c == 2) {
-		if (floatCheck(argv[4]) == 1 && floatCheck(argv[6]) == 1) {
-			cout << "result " << calc(atof(argv[2]), atof(argv[6]), s);
-		}
-		else if (floatCheck(argv[4]) == 1 && floatCheck(argv[6]) == 0) {
-			cout << "result " << calc(atof(argv[2]), atoi(argv[6]), s);
-		}
-		else if (floatCheck(argv[4]) == 0 && floatCheck(argv[6]) == 1) {
-			cout << "result " << calc(atoi(argv[2]), atof(argv[6]), s);
-		}
-		else if (floatCheck(argv[4]) == 0 && floatCheck(argv[6]) == 0) {
-			cout << "result " << calc(atof(argv[2]), atof(argv[6]), s);
-		}
-	}if (c == 4) {
-		if (floatCheck(argv[2]) == 1 && floatCheck(argv[6]) == 1) {
-			cout << "result " << calc(atof(argv[2]), atof(argv[6]), s);
-		}
-		else if (floatCheck(argv[2]) == 1 && floatCheck(argv[6]) == 0) {
-			cout << "result " << calc(atof(argv[2]), atoi(argv[6]), s);
-		}
-		else if (floatCheck(argv[2]) == 0 && floatCheck(argv[6]) == 1) {
-			cout << "result " << calc(atoi(argv[2]), atof(argv[6]), s);
-		}
-		else if (floatCheck(argv[2]) == 0 && floatCheck(argv[6]) == 0) {
-			cout << "result " << calc(atof(argv[2]), atof(argv[6]), s);
-		}
-	}
-	if (c == 6) {
-		if (floatCheck(argv[2]) == 1 && floatCheck(argv[4]) == 1) {
-			cout << "result " << calc(atof(argv[2]), atof(argv[4]), s);
-		}
-		else if (floatCheck(argv[2]) == 1 && floatCheck(argv[4]) == 0) {
-			cout << "result " << calc(atof(argv[2]), atoi(argv[4]), s);
-		}
-		else if (floatCheck(argv[2]) == 0 && floatCheck(argv[4]) == 1) {
-			cout << "result " << calc(atoi(argv[2]), atof(argv[4]), s);
-		}
-		else if (floatCheck(argv[2]) == 0 && floatCheck(argv[4]) == 0) {
-			cout << "result " << calc(atof(argv[2]), atof(argv[4]), s);
-		}
-	}
-
-	cout << "result " << calc(10.0f, 10, '-');
 	return 0;
 }
