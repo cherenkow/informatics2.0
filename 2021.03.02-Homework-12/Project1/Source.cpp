@@ -139,7 +139,7 @@ int main(int argc, char* argv[]) {
 			}
 		}
 		if (c < 0) {
-			cout << "error" << endl;
+			cout << "ne nashel deistvie" << endl;
 			cout << "error" << endl;
 			cout << "error" << endl;
 			cout << "error" << endl;
@@ -151,7 +151,7 @@ int main(int argc, char* argv[]) {
 		}
 	}
 	else {
-		cout << "error" << endl;
+		cout << "malo argumentov" << endl;
 		cout << "error" << endl;
 		cout << "error" << endl;
 		cout << "error" << endl;
