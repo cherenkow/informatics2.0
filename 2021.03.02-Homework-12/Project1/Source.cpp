@@ -12,6 +12,7 @@ template <class T1, class T2>
 T1 mult(T1 a, T2 b) {
 	return a * b;
 }
+
 template <class T1, class T2>
 T1 div(T1 a, T2 b) {
 	return a / b;
