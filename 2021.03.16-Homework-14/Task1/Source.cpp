@@ -11,6 +11,21 @@ void swap(int& a, int& b)
 	b = c;
 }
 
+void fillSequenceUpArray(int* a, int len, int A)
+{
+	for (int i = 0; i < len; ++i) {
+		a[i] = A;
+		++A;
+	}
+}
+void fillSequenceDownArray(int* a, int len, int B)
+{
+	for (int i = 0; i < len; ++i) {
+		a[i] = B;
+		--B;
+	}
+}
+
 void fillArray(int* a, int len)
 {
 	for (int i = 0; i < len; ++i) {
