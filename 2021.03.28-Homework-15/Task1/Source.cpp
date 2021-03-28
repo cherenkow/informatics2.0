@@ -113,9 +113,9 @@ int main()
 	srand(time(NULL));
 	int len1 = 0;
 	int len2 = 0;
-	cout << "введите размер первого массива" << endl;
+	cout << "введите длину первого массива" << endl;
 	cin >> len1;
-	cout << "введите размер второго массива" << endl;
+	cout << "введите длину второго массива" << endl;
 	cin >> len2;
 	int* a = new int[len1] { 0 };
 	int* b = new int[len2] { 0 };
