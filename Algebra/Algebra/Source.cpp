@@ -68,7 +68,7 @@ int main() {
 	int* a = new int[5]{ 1, 2,3,4,5 };
 	int* b = new int[5]{ 0 };
 	int* c = new int[5]{ 0 };
-		while (true) {
+	/*	while (true) {
 			////////////////
 			if (c[0] == 666) {
 				break;
@@ -98,8 +98,9 @@ int main() {
 					stable(a);
 				}
 			}
-		}
-	/*for (int k = 0; k < 4; ++k) {
+		} */
+
+	for (int k = 0; k < 4; ++k) {
 		stable2(b);
 		cout << "product of " << 5 - k << " permutations" << endl;
 		for (int i = 0; i < power(5 - k); ++i) {
@@ -119,6 +120,6 @@ int main() {
 			cout << "{ "; print(a); cout << "}" << endl;
 			stable(a);
 		}
-	} */
+	} 
 	return 0;
 }
