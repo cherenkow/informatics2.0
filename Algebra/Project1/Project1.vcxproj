@@ -21,10 +21,10 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{97de7109-0b13-4fc8-ab8c-98d0411256b6}</ProjectGuid>
-    <RootNamespace>Algebra</RootNamespace>
+    <ProjectGuid>{292e1ba0-bcb4-4571-b3be-9d1b62bfa9ab}</ProjectGuid>
+    <RootNamespace>Project1</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Permutations</ProjectName>
+    <ProjectName>Order</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
