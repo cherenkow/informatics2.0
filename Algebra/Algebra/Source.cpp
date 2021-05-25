@@ -68,6 +68,7 @@ int main() {
 	int* a = new int[5]{ 1, 2,3,4,5 };
 	int* b = new int[5]{ 0 };
 	int* c = new int[5]{ 0 };
+
 	/*	while (true) {
 			////////////////
 			if (c[0] == 666) {
