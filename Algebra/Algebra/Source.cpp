@@ -15,6 +15,13 @@ void print(int* a) {
 	}
 }
 void sigma0(int*& a) {
+	int temp = a[4];
+	a[4] = a[3];
+	a[3] = a[2];
+	a[2] = a[1];
+	a[1] = a[0];
+	a[0] = temp;
+	/*
 	int temp = a[2];
 	a[2] = a[1];
 	a[1] = a[0];
@@ -22,8 +29,16 @@ void sigma0(int*& a) {
 	temp = a[3];
 	a[3] = a[4];
 	a[4] = temp;
+	*/
 }
 void sigma1(int*& a) {
+	int temp = a[0];
+	a[0] = a[1];
+	a[1] = temp;
+	temp = a[2];
+	a[2] = a[3];
+	a[3] = temp;
+	/*
 	int temp = a[4];
 	a[4] = a[3];
 	a[3] = a[0];
@@ -31,6 +46,7 @@ void sigma1(int*& a) {
 	temp = a[1];
 	a[1] = a[2];
 	a[2] = temp;
+	*/
 }
 void stable(int*& a) {
 	for (int i = 0; i < 5; ++i) {
@@ -40,7 +56,7 @@ void stable(int*& a) {
 }
 bool check(int* a) {
 	int k = 0;
-	int* c = new int[5]{ 1,2,3,5,4 };
+	int* c = new int[5]{2,3,1,4,5};
 	for (int i = 0; i < 5; ++i) {
 		if (a[i] != c[i]) {
 			++k;
