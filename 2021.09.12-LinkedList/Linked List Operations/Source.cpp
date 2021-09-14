@@ -173,10 +173,12 @@ struct List
 			return;
 		}
 		Node* Last = last();
-		for (int i = length(); i >= 2; --i) {
+		int l = length();
+		for (int i = l; i >= 2; --i) {
 			Node* t1 = getPtr(i);
 			Node* t2 = getPtr(i - 1);
 			t1->next = t2;
+			t2->next = nullptr;
 		}
 		head->next = nullptr;
 		head = Last;
@@ -206,11 +208,6 @@ int main()
 	l.delp(1);
 	l.print();
 	List ll;
-	/*ll.addAfterFirst(1);
-	ll.addAfterFirst(3);
-	ll.addAfterFirst(2);
-	ll.print();
-	ll.ptrCheck(3); */
 	l.reverse();
 	l.print();
 	return EXIT_SUCCESS;
