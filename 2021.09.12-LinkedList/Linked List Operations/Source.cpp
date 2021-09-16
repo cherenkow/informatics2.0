@@ -17,8 +17,36 @@ struct List
 	{
 		head = nullptr;
 	}
-
-
+	~List()
+	{
+		Node* temp = head;
+		while (temp != nullptr)
+		{
+			Node* node = temp;
+			temp = temp->next;
+			delete node;
+		}
+	}
+	List(const List& l) {
+		copy(head);
+	}
+	List& operator= (const List& list){
+		if (&list != this) {
+			while (this->length() > 0) {
+				this->delFirst();
+			}
+			for (Node* temp = list.head; temp != nullptr; temp = temp->next) {
+				this->addLast(temp->data);
+			}
+		}
+		return *this;
+	}
+	void del() {
+		int k = length();
+		for (int i = 0; i < k; ++i) {
+			delFirst();
+		}
+	}
 	void print()
 	{
 		Node* p = head;
@@ -148,7 +176,7 @@ struct List
 			return;
 		}
 		if (length() == 1) {
-
+			delFirst();
 			return;
 		}
 		if (index == 0) {
@@ -188,6 +216,15 @@ struct List
 		cout << "data = " << t -> data;
 	}
 };
+
+Node* copy(Node* x)
+{
+	if (x == nullptr)
+		return nullptr;
+	Node* y;
+	y = new Node(x->data, copy(x->next));
+	return y;
+}
 
 
 int main()
