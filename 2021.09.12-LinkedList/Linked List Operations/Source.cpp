@@ -10,6 +10,14 @@ struct Node
 		data(d), next(n) {}
 
 };
+Node* copy(Node* x)
+{
+	if (x == nullptr)
+		return nullptr;
+	Node* y;
+	y = new Node(x->data, copy(x->next));
+	return y;
+}
 struct List
 {
 	Node* head;
@@ -28,7 +36,7 @@ struct List
 		}
 	}
 	List(const List& l) {
-		copy(head);
+		head = copy(l.head);
 	}
 	List& operator= (const List& list){
 		if (&list != this) {
@@ -217,30 +225,31 @@ struct List
 	}
 };
 
-Node* copy(Node* x)
-{
-	if (x == nullptr)
-		return nullptr;
-	Node* y;
-	y = new Node(x->data, copy(x->next));
-	return y;
-}
 
 
 int main()
 {
 	List l;
+	List l1;
+	l1.addAfterFirst(4);
+	l1.addAfterFirst(5);
+	l1.addAfterFirst(666);
+	l1.addLast(5);
 	l.addAfterFirst(1);
 	l.addAfterFirst(3);
 	l.addAfterFirst(2);
 	l.addLast(5);
 	l.print();
+	l1.print();
+	l1 = l;
+	l1.print();
 	l.delLast();
 	l.print();
 	l.addLast(4);
 	l.insert(1, 666);
 	int k = l.length();
 	cout << "dlina spiska - " << k << endl;
+	
 	l.print();
 	l.delp(1);
 	l.print();
