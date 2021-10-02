@@ -3,9 +3,9 @@
 using namespace std;
 struct DNode
 {
-	int data; 
+	int data;
 	DNode* next;
-	DNode* prev; 
+	DNode* prev;
 	DNode(int d = 0, DNode* n = nullptr, DNode* p = nullptr) :
 		data(d), next(n), prev(p) {}
 };
@@ -13,14 +13,31 @@ struct DList
 {
 	DNode* head, * tail;
 	DList() { head = nullptr; tail = nullptr; }
+	~DList() {
+		DNode* temp = head;
+		while (temp != nullptr) {
+			DNode* t = temp;
+			temp = temp->next;
+			delete t;
+		}
+	}
+	// вбивать надо номер узла 
 	DNode* getPtr(int num) {
+		if (length() < num || num < 0) {
+			return nullptr;
+		}
 		DNode* t = head;
 		for (int i = 1; i < num; ++i); {
 			t = t->next;
 		}
 		return t;
 	}
-	void addFirst(int d) 
+	void del() {
+		for (int i = 0; i < length(); ++i) {
+			delFirst();
+		}
+	}
+	void addFirst(int d)
 	{
 		DNode* t;
 		t = new DNode(d, head, nullptr);
@@ -52,7 +69,7 @@ struct DList
 			addLast(d);
 			return;
 		}
-		DNode* t = new DNode (d, head->next, head);
+		DNode* t = new DNode(d, head->next, head);
 		DNode* t1 = head->next;
 		t1->prev = t;
 		head->next = t;
@@ -159,24 +176,24 @@ struct DList
 		}
 		return k;
 	}
-	void print() 
+	void print()
 	{
 		DNode* p = head;
 		while (p != nullptr)
 		{
 			cout << p->data << "\t";
-			p = p->next; 
+			p = p->next;
 		}
 		cout << endl;
 	}
-	void printB() 
+	void printB()
 	{
 		DNode* p = tail;
 		while (p != nullptr)
 
 		{
 			cout << p->data << "\t";
-			p = p->prev; 
+			p = p->prev;
 		}
 		cout << endl;
 	}
@@ -186,11 +203,37 @@ struct DList
 		printB();
 		cout << endl;
 	}
-}; 
+	void reverse() {
+		if (length() == 0) {
+			cout << "EMPTY" << endl;
+			return;
+		}
+		if (length() == 1) {
+			return;
+		}
+		int l = length();
+		DNode* temp = head;
+		for (int i = 1; i < l; ++i) {
+			temp->prev = temp->next;
+			temp = temp->next;
+		}
+		tail->prev = nullptr;
+		DNode* Last = tail;
+		tail = head;
+		for (int i = l; i >= 2; --i) {
+			DNode* t1 = getPtr(i);
+			DNode* t2 = getPtr(i - 1);
+			t1->next = t2;
+			t2->next = nullptr;
+		}
+		head->next = nullptr;
+		head = Last;
+	}
+};
 int main()
 {
-	DList l; 
-	l.addFirst(3); 
+	DList l;
+	l.addFirst(3);
 	l.addFirst(2);
 	l.addFirst(1);
 	l.Print();
@@ -207,6 +250,8 @@ int main()
 	l.delSecond();
 	l.Print();
 	l.delp(2);
+	l.Print();
+	l.reverse();
 	l.Print();
 
 	return EXIT_SUCCESS;
