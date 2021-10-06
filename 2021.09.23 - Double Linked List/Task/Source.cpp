@@ -21,8 +21,7 @@ struct DList
 			delete t;
 		}
 	}
-	DNode* copy(DNode* x)
-	{
+	DNode* copy(DNode* x){
 		DNode* t;
 		t = nullptr;
 		if (x != nullptr)
@@ -35,8 +34,7 @@ struct DList
 		}
 		return t;
 	}
-	DList& operator=(const DList& list)
-	{
+	DList& operator=(const DList& list){
 		del();
 		head = copy(list.head);
 		tail = getPtr(length());
