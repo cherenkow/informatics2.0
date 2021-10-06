@@ -21,13 +21,34 @@ struct DList
 			delete t;
 		}
 	}
+	DNode* copy(DNode* x)
+	{
+		DNode* t;
+		t = nullptr;
+		if (x != nullptr)
+		{
+			t = new DNode(x->data, copy(x->next));
+			if (t->next != nullptr)
+			{
+				t->next->prev = t;
+			}
+		}
+		return t;
+	}
+	DList& operator=(const DList& list)
+	{
+		del();
+		head = copy(list.head);
+		tail = getPtr(length());
+		return *this;
+	}
 	// вбивать надо номер узла 
 	DNode* getPtr(int num) {
 		if (length() < num || num < 0) {
 			return nullptr;
 		}
 		DNode* t = head;
-		for (int i = 1; i < num; ++i); {
+		for (int i = 1; i < num; ++i) {
 			t = t->next;
 		}
 		return t;
@@ -253,6 +274,9 @@ int main()
 	l.Print();
 	l.reverse();
 	l.Print();
+	DList ll;
+	ll = l;
+	ll.Print();
 
 	return EXIT_SUCCESS;
 }
