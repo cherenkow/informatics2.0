@@ -12,7 +12,7 @@ struct Subscriber {
 };
 ostream& operator << (ostream& st, Subscriber z)
 {
-	return st << "Имя:" << z.name << "Номер:" << z.name << "Адрес:" << z.adress << endl;
+	return st << "Имя:" << z.name << " Номер:" << z.number << " Адрес:" << z.adress << endl;
 }
 istream& operator >> (istream& st, Subscriber& z)
 {
@@ -27,11 +27,11 @@ void printMenu()
 	cout << "3 - распечатать имя и адрес абонента по номеру тебефона" << endl;
 	cout << "4 - вывести абонентскую базу" << endl;
 }
-void addAbonent(long long n, string nn, string a, list<Subscriber> l) {
+void addAbonent(long long n, string nn, string a, list<Subscriber>& l) {
 	Subscriber x(n, nn, a);
 	l.push_back(x);
 }
-void delAbonent(long long n, list <Subscriber> l) {
+void delAbonent(long long n, list <Subscriber>& l) {
 	Subscriber x;
 	for (auto i = l.begin(); i != l.end(); ++i) {
 		x = *i;
@@ -42,18 +42,18 @@ void delAbonent(long long n, list <Subscriber> l) {
 	}
 	cout << "Ошибка";
 }
-void printAbonent(long long n, list <Subscriber> l) {
+void printAbonent(long long n, list <Subscriber>& l) {
 	Subscriber x;
 	for (auto i = l.begin(); i != l.end(); ++i) {
 		x = *i;
 		if (x.number == n) {
-			cout << *i << endl;
+			cout << x << endl;
 			return;
 		}
 	}
 	cout << "Ошибка";
 }
-void switchCase(int choice, list <Subscriber> l) {
+void switchCase(int choice, list <Subscriber>& l) {
 	cout << endl;
 	string na = "sdf";
 	string a = "sdf";
@@ -77,7 +77,7 @@ void switchCase(int choice, list <Subscriber> l) {
 	case 3:
 		cout << "Введите номер абонента:" << endl;
 		cin >> x;
-		delAbonent(x, l);
+		printAbonent(x, l);
 		break;
 	case 4:
 		cout << "Текущие абоненты в базе:" << endl;
@@ -93,6 +93,16 @@ int main() {
 
 	int choice = -1;
 	list <Subscriber> l;
+	Subscriber x (2,"Петя","Камушкин");
+	Subscriber xx(546, "Миша", "Булыжников");
+	Subscriber xxx(547658, "Вова", "Калькин");
+	l.push_back(x);
+	l.push_back(xx);
+	l.push_back(xxx);
+	for (auto i = l.begin(); i != l.end(); ++i) {
+		cout << *i << endl;
+	}
+	
 	while (choice != 0)
 	{
 		printMenu();
