@@ -28,7 +28,7 @@ void print(vector <double> v) {
 		cout << *i << ' ';
 	cout << endl;
 }
-vector <double> contact(vector <double> v, vector <double>v1) {
+vector <double> concat(vector <double> v, vector <double>v1) {
 	vector <double> w(v.size() + v1.size());
 	copy(v.begin(), v.end(), w.begin());
 	copy(v1.begin(), v1.end(), w.begin() + v.size());
@@ -42,42 +42,82 @@ vector <double> repeat(vector <double> v, int n) {
 
 	return w;
 }
-vector <double>::iterator secondFind(vector <double> v, double k) {
+vector <double>::iterator lastFind(vector <double>& v,double k) {
+	vector <double>::iterator  j = v.begin();
+	vector <double>::iterator  jj = j;
+	while (j != v.end()) {
+		jj = j;
+		j = find(jj+1, v.end(), k);
+	}
+	return jj;
+}
+vector <double>::iterator secondFind(vector <double>& v, double k) {
 	vector <double>::iterator i;
 	i = find(v.begin(), v.end(), k);
+	if (i == v.end()) {
+		return i;
+	}
 	vector <double>::iterator ii;
-	i = find(i, v.end(), k);
-	return i;
+	ii = find(i+1, v.end(), k);
+	return ii;
+}
+void xSearch(vector <double> v, double x, int& i, int& j) {
+	vector < double> ::iterator ii = lower_bound(v.begin(), v.end(), x);
+	if (ii == v.end()) {
+		i = j + 1;
+		return;
+	}
+	int k = 0;
+	vector < double> ::iterator jj = v.begin();
+	while (jj != ii) {
+		k += 1;
+		jj += 1;
+	}
+	i = k;
+	j = k;
+	return;
 }
 int main()
 {
 	vector <double> v;
 	double x;
-	
 	while (cout << "Enter data", cin >> x) {
 		v.push_back(x);
 	}
 	print(v);
+
+
 	enlarge(v);
-	print(v);
+	print(v);  
+
+
 	cout << "which element do you want to find" << endl;
-	int kk = 0;
+	cin.clear();
+	double kk = 0;
 	cin >> kk;
 	vector <double>::iterator ii = secondFind(v, kk);
-	cout << *(ii - 1);
+	cout << *(ii - 1) << endl;
+	vector <double>::iterator jjj = lastFind(v, kk);
+	cout << *(jjj - 1) << endl;
+
 	del(v);
 	print(v);
+
+
 	double* arr = new double[v.size()];
 	copy(v.begin(), v.end(), arr);
 	for (unsigned int i = 0; i < v.size(); ++i) {
 		cout << arr[i] << " ";
 	}
 	cout << endl;
+
+
 	vector <double> v1{ 1,2,3,4,5,6,7 };
 	vector <double> v3;
-	v3 = contact(v, v1);
+	v3 = concat(v, v1);
 	print(v3);
 	v3 = repeat(v, 3);
 	print(v3);
+	sort(v.begin(), v.end());
 	return 0;
 }
