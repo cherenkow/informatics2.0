@@ -78,10 +78,14 @@ BNode* f_find(T d, BNode* cur){
 		if (d == cur->data){
 			return cur;
 		}
-		f_find(d, cur->left);
-		f_find(d, cur->right);
-		return nullptr;
+		BNode* p = f_find(d, cur->left);
+		if (p != nullptr) {
+			return p;
+		}
+		p = f_find(d, cur->right);
+		return p;
 	}
+	return nullptr;
 }
 int f_min(int minimum, BNode* cur){
 	if (cur != nullptr){
@@ -177,7 +181,7 @@ int main() {
 
 	cout << "min: " << t.min() << endl;
 
-
+	cout << q.find(-13)->data << endl;
 
 	return 0;
 }
