@@ -25,10 +25,10 @@ void mapping2() {
 	int a;
 	while (cin >> a) {
 		if (m.count(a) == 0) {
-			cout << a << " not defined" << endl;
+			cout << a << endl;
 		}
 		else {
-			cout << m[a] << " defined" << endl;
+			cout << m[a] << endl;
 		}
 	}
 }
@@ -37,7 +37,7 @@ template <class T1, class T2>
 map <T1, T2> sumMap(map <T1, T2> m1, map <T1, T2> m2) {
 	map <T1,T2> m0;
 	for (auto i = m1.begin(); i != m1.end(); i++) {
-		m0[i] = m1[i] + m2[i];
+		m0[i->first] = m1[i->first] + m2[i->first];
 	}
 	return m0;
 }
@@ -45,7 +45,7 @@ map <T1, T2> sumMap(map <T1, T2> m1, map <T1, T2> m2) {
 template <class T1, class T2, class T3>
 map<T1, T3> compMap(map<T1, T2> m1, map<T2, T3> m2) {
 	for (auto i = m1.begin(); i != m1.end(); i++) {
-		m0[i] = m2[m1[i]];
+		m0[i->first] = m2[m1[i->first]];
 	}
 	return m0;
 }
