@@ -76,80 +76,105 @@ int count(int** mx, int ii, int jj, int n, int m) {
 	return mx[ii-1][jj-1] + mx[ii-1][jj] + mx[ii-1][jj+1] + mx[ii+1][jj -1] + mx[ii+1][jj] + mx[ii+1][jj+1] + mx[ii][jj-1] + mx[ii][jj+1];
 }
 
-void sumMatrix(int**& a, int** b, int n, int m) {
+void assignMatrix(int**& a, int** b, int n, int m) {
 	for (int i = 0; i < n; ++i)
 	{
 		for (int j = 0; j < m; ++j)
 		{
-			a[i][j] += b[i][j];
+			a[i][j] = b[i][j];
 		}
 
 	}
 }
 
-int** game(int** mx, int n, int m) {
+int** game(int**& mx, int n, int m, int k) {
 	int** result = initMatrix(n, m);
-	
-#pragma omp parallel sections
+	for (int l = 0; l < k; ++l)
 	{
-#pragma omp section
-		{
-			int** result1 = initMatrix(n,m);
-			for (int i = 0; i < n/2; ++i)
-			{
-				for (int j = 0; j < m; ++j)
-				{
-					if (mx[i][j] == 1 && count(mx, i, j, n, m) != 3) {
-						result1[i][j] = 0;
-						continue;
-					}
-					if (mx[i][j] == 0 && count(mx, i, j, n, m) == 3) {
-						result1[i][j] = 1;
-						continue;
-					}
-					result1[i][j] = mx[i][j];
-				}
 
+#pragma omp parallel sections
+		{
+#pragma omp section
+			{
+				for (int i = 0; i < n / 2; ++i)
+				{
+					for (int j = 0; j < m; ++j)
+					{
+						if (mx[i][j] == 1 && (count(mx, i, j, n, m) > 3 || count(mx, i, j, n, m) < 2)) {
+							result[i][j] = 0;
+							continue;
+						}
+						if (mx[i][j] == 0 && count(mx, i, j, n, m) == 3) {
+							result[i][j] = 1;
+							continue;
+						}
+						result[i][j] = mx[i][j];
+					}
+
+				}
 			}
-#pragma omp atomic
-			sumMatrix(result, result1, n, m);
+#pragma omp section
+			{
+				for (int i = n / 2; i < n; ++i)
+				{
+					for (int j = 0; j < m; ++j)
+					{
+						if (mx[i][j] == 1 && (count(mx, i, j, n, m) > 3 || count(mx, i, j, n, m) < 2)) {
+							result[i][j] = 0;
+							continue;
+						}
+						if (mx[i][j] == 0 && count(mx, i, j, n, m) == 3) {
+							result[i][j] = 1;
+							continue;
+						}
+						result[i][j] = mx[i][j];
+					}
+
+				}
+			}
 		}
-#pragma omp section
+#pragma omp parallel sections
 		{
-			int** result2 = initMatrix(n, m);
-			for (int i = n/2; i < n; ++i)
+#pragma omp section
 			{
-				for (int j = 0; j < m; ++j)
+				for (int i = 0; i < n / 2; ++i)
 				{
-					if (mx[i][j] == 1 && count(mx, i, j, n, m) != 3) {
-						result2[i][j] = 0;
-						continue;
+					for (int j = 0; j < m; ++j)
+					{
+						mx[i][j] = result[i][j];
 					}
-					if (mx[i][j] == 0 && count(mx, i, j, n, m) == 3) {
-						result2[i][j] = 1;
-						continue;
-					}
-					result2[i][j] = mx[i][j];
-				}
 
+				}
 			}
-#pragma omp atomic
-			sumMatrix(result, result2, n, m);
+#pragma omp section
+			{
+				for (int i = n / 2; i < n; ++i)
+				{
+					for (int j = 0; j < m; ++j)
+					{
+						mx[i][j] = result[i][j];
+					}
+
+				}
+			}
 		}
 	}
-	return result;
+	return mx;
 }
+
 int main()
 {
 	int n = 0;
 	int m = 0;
+	int k = 0;
 	cin >> n;
 	cin >> m;
+	cin >> k;
 	int** a = initMatrix(n,m);
 	fillMatrix(a, n, m);
 	printMatrix(a,n,m);
 	cout << endl << "after" << endl;
-	printMatrix(game(a, n, m), n, m);
+	printMatrix(game(a, n, m, k), n, m);
 
 
 	return EXIT_SUCCESS;
