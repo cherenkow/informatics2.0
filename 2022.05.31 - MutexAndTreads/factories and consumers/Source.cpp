@@ -15,8 +15,8 @@ vector<int> v1, v2;
 
 mt19937 mt;
 uniform_int_distribution<int> r(0, 100'000);
-
 mutex m;
+
 void factory()
 {
 	while (work1 == true)
@@ -33,6 +33,7 @@ void factory()
 		}
 	}
 }
+
 void consumer()
 {
 	while (work2 == true)
@@ -48,6 +49,7 @@ void consumer()
 		}
 	}
 }
+
 void check_all()
 {
 	thread f1(factory);
@@ -81,6 +83,7 @@ void check_all()
 	}
 	cout << endl;
 }
+
 void factory_m()
 {
 
@@ -101,6 +104,7 @@ void factory_m()
 		}
 	}
 }
+
 void consumer_m()
 {
 	while (work2 == true)
@@ -119,6 +123,7 @@ void consumer_m()
 		}
 	}
 }
+
 void check_all_m()
 {
 	thread f1(factory_m);
@@ -154,6 +159,7 @@ void check_all_m()
 	}
 	cout << endl;
 }
+
 int main()
 {
 	check_all_m();
