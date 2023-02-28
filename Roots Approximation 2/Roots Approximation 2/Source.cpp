@@ -1,23 +1,33 @@
 #include <iostream>
 #include <cmath>
+#include <iomanip>
 using namespace std;
 
-double func(double x) {
+long double func(long double x) {
 	return (2 * x * x - pow(2, x) - 5);
 }
 
-double funcDer(double x) {
-	return(4 * x - pow(2, x));
+long double funcDer(long double x) {
+	return(4 * x - log(2)*pow(2, x));
 }
 
-void init(double* arr) {
+long double funcSecDer(long double x) {
+	return(4 - log(2)* log(2) * pow(2, x));
+}
+
+/* 
+bool checkDot(long double x) {
+	return(funcDer(x)*funcSecDer(x)>0);
+}
+*/ // можно сделать проверку на сходимость в методе ньютона
+void init(long double* arr) {
 	for (int i = 0; i < 15; ++i) {
 		arr[i] = 0;
 	}
 	return;
 }
 
-void print(double* arr) {
+void print(long double* arr) {
 	for (int i = 0; i < 15; ++i) {
 		cout << arr[i] << " ";
 	}
@@ -25,12 +35,12 @@ void print(double* arr) {
 	return;
 }
 
-bool signCheck(double a, double b) {
+bool signCheck(long double a, long double b) {
 	return (a * b < 0);
 }
 
-void rootsDivision(double step, double*& arr) {
-	double x = -3;
+void rootsDivision(long double step, long double*& arr) {
+	long double x = -3;
 	int k = 0;
 
 	while (x + step <= 7) {
@@ -49,16 +59,16 @@ void rootsDivision(double step, double*& arr) {
 	return;
 }
 
-void bisectionMet(int numOfRoots, double* arr, double eps) {
+void bisectionMet(int numOfRoots, long double* arr, long double eps) {
 	cout << "Bisection Method" << endl;
 	for (int i = 0; i < numOfRoots; ++i) {
-		double a = arr[2 * i];
-		double b = arr[2 * i + 1];
-		double c = (a + b) / 2;
+		long double a = arr[2 * i];
+		long double b = arr[2 * i + 1];
+		long double c = (a + b) / 2;
 		int counter = 0;
 		cout << "Начальное приближение:" << c << endl;
 		while (b - a >= 2 * eps) {
-			if (signCheck(a, c)) {
+			if (signCheck(func(a), func(c))) {
 				b = c;
 				c = (a + b) / 2;
 			}
@@ -76,17 +86,17 @@ void bisectionMet(int numOfRoots, double* arr, double eps) {
 	return;
 }
 
-double newArg(double x) {
+long double newArg(long double x) {
 	return(x - func(x) / funcDer(x));
 }
 
-void newtonMet(int numOfRoots, double* arr, double eps) {
+void newtonMet(int numOfRoots, long double* arr, long double eps) {
 	cout << "Newton Method" << endl;
 	for (int i = 0; i < numOfRoots; ++i) {
-		double a = arr[2 * i];
-		double b = arr[2 * i + 1];
-		double c0 = 0;
-		double c1 = (a + b) / 2;
+		long double a = arr[2 * i];
+		long double b = arr[2 * i + 1];
+		long double c0 = 0;
+		long double c1 = (a + b) / 2;
 		int counter = 0;
 		cout << "Начальное приближение:" << c1 << endl;
 		while (fabs(c1 - c0) >= eps) {
@@ -102,17 +112,17 @@ void newtonMet(int numOfRoots, double* arr, double eps) {
 	return;
 }
 
-double newArgMod(double x, double x0) {
+long double newArgMod(long double x, long double x0) {
 	return(x - func(x) / funcDer(x0));
 }
 
-void newtonMetMod(int numOfRoots, double* arr, double eps) {
+void newtonMetMod(int numOfRoots, long double* arr, long double eps) {
 	cout << "Modified Newton Method" << endl;
 	for (int i = 0; i < numOfRoots; ++i) {
-		double a = arr[2 * i];
-		double b = arr[2 * i + 1];
-		double c0 = 0;
-		double c1 = (a + b) / 2;
+		long double a = arr[2 * i];
+		long double b = arr[2 * i + 1];
+		long double c0 = 0;
+		long double c1 = (a + b) / 2;
 		int counter = 0;
 		cout << "Начальное приближение:" << c1 << endl;
 		while (fabs(c1 - c0) >= eps) {
@@ -128,15 +138,15 @@ void newtonMetMod(int numOfRoots, double* arr, double eps) {
 	return;
 }
 
-double newArgSec(double x2, double x1) {
+long double newArgSec(long double x2, long double x1) {
 	return(x2 - func(x2) * (x2 - x1) / (func(x2) - func(x1)));
 }
 
-void secantMet(int numOfRoots, double* arr, double eps) {
+void secantMet(int numOfRoots, long double* arr, long double eps) {
 	cout << "Secant Method" << endl;
 	for (int i = 0; i < numOfRoots; ++i) {
-		double a = arr[2 * i];
-		double b = arr[2 * i + 1];
+		long double a = arr[2 * i];
+		long double b = arr[2 * i + 1];
 		int temp = 0;
 		int counter = 0;
 		cout << "Начальное приближение:" << b << endl;
@@ -155,19 +165,19 @@ void secantMet(int numOfRoots, double* arr, double eps) {
 }
 
 int main() {
-
+	cout << setprecision(12);
 	setlocale(LC_ALL, "Russian");
-	double* ends = new double[15];
+	long double* ends = new long double[15];
 	init(ends);
-	double n = 10000;
-	double A = -3;
-	double B = 7;
-	double ff = 0;
-	double epsilon = 1 / pow(10, 5);
-	double h = (B - A) / n;
+	long double n = 10000;
+	long double A = -3;
+	long double B = 7;
+	long double ff = 0;
+	long double epsilon = 1 / pow(10, 12);
+	long double h = (B - A) / n;
 	cout << "НАХОЖДЕНИЕ ПРИБЛИЖЕННЫХ ЗНАЧЕНИЙ КОРНЕЙ НЕЛИНЕЙНОГО УРАНВЕНИЯ" << endl << endl;
 	cout << "Исходные параметры задачи:" << endl << endl;
-	cout << "Отрезок: [-3;7]  Функция: f(x) = x^2 - 2^x -5  Точность: е = 10^-5" << endl << endl;
+	cout << "Отрезок: [-3;7]  Функция: f(x) = 2*x^2 - 2^x -5  Точность: е = " << epsilon <<  endl << endl;
 
 	rootsDivision(h, ends);
 	
