@@ -19,7 +19,7 @@ long double funcSecDer(long double x) {
 bool checkDot(long double x) {
 	return(funcDer(x)*funcSecDer(x)>0);
 }
-*/ // можно сделать проверку на сходимость в методе ньютона
+*/ // можно сделать проверку на сходимость в методе ньютона?
 void init(long double* arr) {
 	for (int i = 0; i < 15; ++i) {
 		arr[i] = 0;
