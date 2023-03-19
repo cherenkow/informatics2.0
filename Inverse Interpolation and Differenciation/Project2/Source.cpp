@@ -17,9 +17,15 @@ double** initMatrix(int n, int m)
 	return matrix;
 }
 
-void printTab(double** matrix, int n, int m)
+void printTab(double** matrix, int n, int m, int c)
 {
-	cout << "x    |    f(x)" << endl;
+	if (c == 0) {
+		cout << "x    |    f(x)" << endl;
+	}
+	else {
+		cout << "f(x)    |    x" << endl;
+	}
+
 	for (int j = 0; j < m; ++j)
 	{
 		cout << matrix[0][j] << " | " << matrix[1][j] << endl;
@@ -40,9 +46,9 @@ void printMatrix(double** matrix, int n, int m)
 }
 
 void fillTab(double**& arr, int m, double a, double b) {
-	double h = (b - a) / m;
+	double h = (b - a) / (m - 1);
 	for (int i = 0; i < m; ++i) {
-		arr[0][i] = a + (h * i + h * (i + 1)) / 2;
+		arr[0][i] = a + h * i;
 		arr[1][i] = func(arr[0][i]);
 	}
 }
@@ -51,6 +57,13 @@ void swap(double& a, double& b) {
 	double t = a;
 	a = b;
 	b = t;
+	return;
+}
+
+void swapTable(double**& arr, int n, int m) {
+	for (int i = 0; i < m; ++i) {
+		swap(arr[0][i], arr[1][i]);
+	}
 	return;
 }
 
@@ -88,17 +101,27 @@ double Lagrange(double x, int n, double** arr) {
 	return (LagrangePol);
 }
 
+double equasion(double x, double F, int n, double** arr) {
+	return (Lagrange(x, n, arr) - F);
+}
+
+bool signCheck(double a, double b) {
+	return (a * b < 0);
+}
+
+
+
 void fillDifTab(double**& arr, double** tabs, int n) {
 	int m = 2 * n + 1;
 	int k = 0;
-	for (int i = 0; i < m;i+=2) {
+	for (int i = 0; i < m; i += 2) {
 		arr[i][0] = tabs[0][k];
 		arr[i][1] = tabs[1][k];
 		++k;
 	}
-	for (int i = 1; i < n+1; ++i) {
-		for (int j = i - 1; j < m - i +1 - 2; j+=2) { 
-			arr[j + 1][i + 1] = (arr[j + 2][i] - arr[j][i]) / (arr[j +2 + i - 1][0] - arr[j - i + 1][0]);
+	for (int i = 1; i < n + 1; ++i) {
+		for (int j = i - 1; j < m - i + 1 - 2; j += 2) {
+			arr[j + 1][i + 1] = (arr[j + 2][i] - arr[j][i]) / (arr[j + 2 + i - 1][0] - arr[j - i + 1][0]);
 		}
 	}
 	return;
@@ -108,17 +131,37 @@ double Newton(double** arr, int n, double x) {
 	double count = 0;
 	double brac = 1;
 	for (int i = 0; i < n + 1; ++i) {
-		count += brac * arr[i][i+1];
+		count += brac * arr[i][i + 1];
 		brac = brac * (x - arr[2 * i][0]);
 	}
-	return count; 
+	return count;
+}
+
+void bisectionMet(double End1, double End2, double eps,double F, int n, double** arr) {
+	double a = End1;
+	double b = End2;
+	double c = (a + b) / 2;
+	while (b - a >= 2 * eps) {
+		if (signCheck((Newton(arr, n, a)-F), (Newton(arr, n, c) - F))) {
+			b = c;
+			c = (a + b) / 2;
+		}
+		else {
+			a = c;
+			c = (a + b) / 2;
+		}
+	}
+
+	cout << "Найденное значение корня:" << c << endl;
+	cout << "Неувязка: " << fabs(Newton(arr, n, c) - F) << endl << endl;
+	return;
 }
 
 bool rebool(int k) {
 	return (k == 1);
 }
 
-void guestInterpolation() {
+void InverseInterpolation() {
 	cout << "Введите количество узлов интерполирования" << endl;
 	int m = 0;
 	cin >> m;
@@ -129,39 +172,53 @@ void guestInterpolation() {
 	cin >> b;
 
 	bool exit = true;
-	
+
 	while (exit == true) {
 
 		double** tab = initMatrix(2, m);
 		fillTab(tab, m, a, b);
 		cout << "Таблица узлов и значений:" << endl;
-		printTab(tab, 2, m);
+		printTab(tab, 2, m, 0);
 
-		cout << "Введите точку интерполирования" << endl;
-		double x = 0;
-		cin >> x;
+		cout << "Введите искомое значение" << endl;
+		double F = 0;
+		cin >> F;
 		cout << "Введите степень интерполяционного многочлена" << endl;
 		int n = m + 2;
 		while (n >= m) {
 			cout << "Внимание! Степень многочлена не должна превосходить " << m - 1 << endl;
 			cin >> n;
 		}
-		sort(x, m, n, tab);
+		swapTable(tab, 2, m);
+		sort(F, m, n, tab);
 		cout << "Отсортированная таблица узлов" << endl;
-		printTab(tab, 2, m);
+		printTab(tab, 2, m, 1);
 
-		cout << "Результат, полученный интерполяционным многочленом Лагранжа:" << endl;
-		cout << "f(x) ~ L(x) = " << Lagrange(x, n, tab) << endl;
-		cout << "aбсолютная фактическая погрешность:" << fabs(func(x) - Lagrange(x, n, tab)) << endl << endl;
 
+		cout << "Результат, полученный первым способом:" << endl;
+		cout << "(f(F))^-1 ~ = " << Lagrange(F, n, tab) << endl;
+		cout << "aбсолютная фактическая погрешность:" << fabs(F - func(Lagrange(F, n, tab))) << endl << endl;
+
+		swapTable(tab, 2, m);
+		cout << "Введите точность, с которой хотите отыскать значение" << endl;
+		double eps = 0;
+		cin >> eps;
+		double end1 = a;
+		double end2 = b;
+		double h = 1 / 10000;
 		double** dif = initMatrix(2 * n + 1, n + 2);
 		fillDifTab(dif, tab, n);
-		cout << "Таблица разделенных разностей" << endl;
-		printMatrix(dif, 2 * n + 1, n + 2);
-		cout << "Результат, полученный интерполяционным многочленом Ньютона:" << endl;
-		cout << "f(x) ~ N(x) = " << Newton(dif, n, x) << endl;
-		cout << "aбсолютная фактическая погрешность:" << fabs(func(x) - Newton(dif, n, x)) << endl;
-
+		if((Newton(dif, n, end1) - F)==0) {
+			cout << "Найденное значение корня:" << end1<< endl;
+			cout << "Неувязка: " << 0 << endl << endl;
+		}
+		else if ((Newton(dif, n, end2) - F) == 0) {
+			cout << "Найденное значение корня:" << end2 << endl;
+			cout << "Неувязка: " << 0 << endl << endl;
+		}
+		else {
+			bisectionMet(end1, end2, eps, F, n, dif);
+		}
 		int ex = 0;
 		cout << "Нажмите 1, если хотите выбрать новую степень многочлена и точку интерполирования" << endl;
 		cout << "Нажмите 0, чтобы выйти из программы" << endl;
@@ -177,6 +234,6 @@ int main() {
 	cout << "ЗАДАЧА АЛГЕБРАИЧЕСКОГО ИНТЕРПОЛИРОВАНИЯ" << endl;
 	cout << "ИНТЕРПОЛЯЦИОННЫЕ МНОГОЧЛЕНЫ НЬЮТОНА И ЛАГРАНЖА" << endl << endl;
 	cout << "Вариант 11: Необходимо интерполировать функцию f(x) = sin(x) + x^2 / 2" << endl << endl;
-	guestInterpolation();
+	InverseInterpolation();
 	return 0;
 }
