@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Project2", "Project2\Project2.vcxproj", "{A1FF53C0-172E-4432-9D39-F96E9DA51AF6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "differenciation", "differenciation\differenciation.vcxproj", "{46C0E42C-ADE6-4F0A-ADE2-A65731B8F483}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{A1FF53C0-172E-4432-9D39-F96E9DA51AF6}.Release|x64.Build.0 = Release|x64
 		{A1FF53C0-172E-4432-9D39-F96E9DA51AF6}.Release|x86.ActiveCfg = Release|Win32
 		{A1FF53C0-172E-4432-9D39-F96E9DA51AF6}.Release|x86.Build.0 = Release|Win32
+		{46C0E42C-ADE6-4F0A-ADE2-A65731B8F483}.Debug|x64.ActiveCfg = Debug|x64
+		{46C0E42C-ADE6-4F0A-ADE2-A65731B8F483}.Debug|x64.Build.0 = Debug|x64
+		{46C0E42C-ADE6-4F0A-ADE2-A65731B8F483}.Debug|x86.ActiveCfg = Debug|Win32
+		{46C0E42C-ADE6-4F0A-ADE2-A65731B8F483}.Debug|x86.Build.0 = Debug|Win32
+		{46C0E42C-ADE6-4F0A-ADE2-A65731B8F483}.Release|x64.ActiveCfg = Release|x64
+		{46C0E42C-ADE6-4F0A-ADE2-A65731B8F483}.Release|x64.Build.0 = Release|x64
+		{46C0E42C-ADE6-4F0A-ADE2-A65731B8F483}.Release|x86.ActiveCfg = Release|Win32
+		{46C0E42C-ADE6-4F0A-ADE2-A65731B8F483}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

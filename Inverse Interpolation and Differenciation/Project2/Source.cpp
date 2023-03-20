@@ -7,6 +7,10 @@ double func(double x) {
 	return (sin(x) + x * x / 2);
 }
 
+double Func(double x) {
+	return (exp(3 * x));
+}
+
 double** initMatrix(int n, int m)
 {
 	double** matrix = new double* [n] { 0 };
@@ -38,7 +42,7 @@ void printMatrix(double** matrix, int n, int m)
 	for (int i = 0; i < n; ++i) {
 		for (int j = 0; j < m; ++j)
 		{
-			cout << matrix[i][j] << " ";
+			cout << matrix[i][j] << "  ";
 		}
 		cout << endl;
 	}
@@ -109,8 +113,6 @@ bool signCheck(double a, double b) {
 	return (a * b < 0);
 }
 
-
-
 void fillDifTab(double**& arr, double** tabs, int n) {
 	int m = 2 * n + 1;
 	int k = 0;
@@ -137,12 +139,12 @@ double Newton(double** arr, int n, double x) {
 	return count;
 }
 
-void bisectionMet(double End1, double End2, double eps,double F, int n, double** arr) {
+void bisectionMet(double End1, double End2, double eps, double F, int n, double** arr) {
 	double a = End1;
 	double b = End2;
 	double c = (a + b) / 2;
 	while (b - a >= 2 * eps) {
-		if (signCheck((Newton(arr, n, a)-F), (Newton(arr, n, c) - F))) {
+		if (signCheck((Newton(arr, n, a) - F), (Newton(arr, n, c) - F))) {
 			b = c;
 			c = (a + b) / 2;
 		}
@@ -152,7 +154,7 @@ void bisectionMet(double End1, double End2, double eps,double F, int n, double**
 		}
 	}
 
-	cout << "Íàéäåííîå çíà÷åíèå êîðíÿ:" << c << endl;
+	cout << "Íàéäåííîå çíà÷åíèå êîðíÿ 2 ñïîñîáîì:" << c << endl;
 	cout << "Íåóâÿçêà: " << fabs(Newton(arr, n, c) - F) << endl << endl;
 	return;
 }
@@ -208,8 +210,8 @@ void InverseInterpolation() {
 		double h = 1 / 10000;
 		double** dif = initMatrix(2 * n + 1, n + 2);
 		fillDifTab(dif, tab, n);
-		if((Newton(dif, n, end1) - F)==0) {
-			cout << "Íàéäåííîå çíà÷åíèå êîðíÿ:" << end1<< endl;
+		if ((Newton(dif, n, end1) - F) == 0) {
+			cout << "Íàéäåííîå çíà÷åíèå êîðíÿ:" << end1 << endl;
 			cout << "Íåóâÿçêà: " << 0 << endl << endl;
 		}
 		else if ((Newton(dif, n, end2) - F) == 0) {
@@ -228,12 +230,83 @@ void InverseInterpolation() {
 	return;
 }
 
+double centralD(double h, double fl, double fr) {
+	return ((fr - fl) / (2 * h));
+}
+
+double leftD(double h, double fx, double f1, double f2) {
+	return ((-3 * fx + 4 * f1 - f2) / (2 * h));
+}
+
+double rightD(double h, double fx, double f1, double f2) {
+	return ((3 * fx - 4 * f1 + f2) / (2 * h));
+}
+void Differenciation() {
+	bool exit = true;
+	while (exit == true) {
+		cout << "Ââåäèòå êîëè÷åñòâî óçëîâ" << endl;
+		int m = 0;
+		cin >> m;
+		cout << "Ââåäèòå êîíöû îòðåçêà" << endl << endl;
+		double a = 0;
+		double b = 0;
+		cin >> a;
+		cin >> b;
+
+		double** tab = initMatrix(m, 8);
+		double h = (b - a) / (m - 1);
+		for (int i = 0; i < m; ++i) {
+			tab[i][0] = a + h * i;
+			tab[i][1] = Func(tab[i][0]);
+			tab[i][2] = 3 * tab[i][1];
+			tab[i][3] = 3 * tab[i][2];
+		}
+
+		for (int i = 1; i < m - 1; ++i) {
+			tab[i][4] = centralD(h, tab[i - 1][1], tab[i + 1][1]);
+			tab[i][5] = fabs(tab[i][4] - tab[i][2]);
+			tab[i][6] = centralD(h, tab[i - 1][4], tab[i + 1][4]);
+			tab[i][7] = fabs(tab[i][6] - tab[i][3]);
+		}
+		//first
+		tab[0][4] = leftD(h, tab[0][1], tab[1][1], tab[2][1]);
+		tab[0][5] = fabs(tab[0][4] - tab[0][2]);
+		tab[0][6] = leftD(h, tab[0][4], tab[1][4], tab[2][4]);
+		tab[0][7] = fabs(tab[0][6] - tab[0][3]);
+		//last
+		tab[m - 1][4] = rightD(h, tab[m - 1][1], tab[m - 2][1], tab[m - 2][1]);
+		tab[m - 1][5] = fabs(tab[0][4] - tab[0][2]);
+		tab[m - 1][6] = rightD(h, tab[m - 1][4], tab[m - 2][4], tab[m - 3][4]);
+		tab[m - 1][7] = fabs(tab[0][6] - tab[0][3]);
+
+		cout << endl;
+		cout << "x    f(x)      f'(x)    |f'òî÷(x)-f'÷èñë(x)|    f''(x)     |f''òî÷(x)-f''÷èñë(x)|  " << endl;
+		for (int i = 0; i < m; ++i) {
+			for (int j = 0; j < 8; ++j) {
+				if (j != 2 && j != 3) {
+					cout << tab[i][j] << "  ";
+				}
+
+			}
+			cout << endl;
+		}
+		//printMatrix(tab, m, 8);
+		int ex = 0;
+		cout << "Íàæìèòå 1, åñëè õîòèòå âûáðàòü íîâóþ ñòåïåíü ìíîãî÷ëåíà è òî÷êó èíòåðïîëèðîâàíèÿ" << endl;
+		cout << "Íàæìèòå 0, ÷òîáû âûéòè èç ïðîãðàììû" << endl;
+		cin >> ex;
+		exit = rebool(ex);
+	}
+	return;
+}
+
+
 int main() {
-	cout << setprecision(15);
+	cout << setprecision(10);
 	setlocale(LC_ALL, "Russian");
-	cout << "ÇÀÄÀ×À ÀËÃÅÁÐÀÈ×ÅÑÊÎÃÎ ÈÍÒÅÐÏÎËÈÐÎÂÀÍÈß" << endl;
-	cout << "ÈÍÒÅÐÏÎËßÖÈÎÍÍÛÅ ÌÍÎÃÎ×ËÅÍÛ ÍÜÞÒÎÍÀ È ËÀÃÐÀÍÆÀ" << endl << endl;
+	cout << "ÇÀÄÀ×À ÎÁÐÀÒÍÎÃÎ ÈÍÒÅÐÏÎËÈÐÎÂÀÍÈß" << endl;
 	cout << "Âàðèàíò 11: Íåîáõîäèìî èíòåðïîëèðîâàòü ôóíêöèþ f(x) = sin(x) + x^2 / 2" << endl << endl;
-	InverseInterpolation();
+	//InverseInterpolation();
+	Differenciation();
 	return 0;
 }
