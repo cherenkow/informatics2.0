@@ -306,7 +306,10 @@ int main() {
 	setlocale(LC_ALL, "Russian");
 	cout << "ÇÀÄÀ×À ÎÁÐÀÒÍÎÃÎ ÈÍÒÅÐÏÎËÈÐÎÂÀÍÈß" << endl;
 	cout << "Âàðèàíò 11: Íåîáõîäèìî èíòåðïîëèðîâàòü ôóíêöèþ f(x) = sin(x) + x^2 / 2" << endl << endl;
-	//InverseInterpolation();
+	InverseInterpolation();
+	cout << endl << endl;
+	cout << "ÇÀÄÀ×À ×ÈÑËÅÍÍÎÃÎ ÄÈÔÔÅÐÅÍÖÈÐÎÂÀÍÈß" << endl;
+	cout << "Âàðèàíò 11: Íåîáõîäèìî ÷èñëåííî ïðîäèôôåðåíöèðîâàòü ôóíêöèþ f(x) = exp(3x)" << endl << endl;
 	Differenciation();
 	return 0;
 }
