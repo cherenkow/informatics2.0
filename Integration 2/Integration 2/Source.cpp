@@ -9,6 +9,15 @@ double func(double x) {
 double Func(double a, double b) {
 	return ((exp(3 * b) - exp(3 * a)) / 3 - (cos(2 * b) - cos(2 * a)) / 2 + (b * b - a * a) / 2);
 }
+double dfunc(double x) {
+	return 3 * exp(3 * x) + 2 * cos(2 * x) + 1;
+}
+double d2func(double x) {
+	return 9 * exp(3 * x) - 4 * sin(2 * x);
+}
+double d4func(double x) {
+	return 81* exp(3 * x) + 16*sin(2 * x);
+}
 
 double func1(double x) {
 	return 1;
@@ -48,7 +57,7 @@ void leftRec(int m, double exact, double a, double b, double (*foo)(double)) {
 	}
 	res *= h;
 	cout << "полученное значение: " << res << endl;
-	cout << "абсолютная фактическая погрешность: " << fabs(res - exact) << endl << endl;
+	cout << "абсолютная фактическая погрешность: " << fabs(res - exact) << endl;
 }
 
 void rightRec(int m, double exact, double a, double b, double (*foo)(double)) {
@@ -60,7 +69,7 @@ void rightRec(int m, double exact, double a, double b, double (*foo)(double)) {
 	}
 	res *= h;
 	cout << "полученное значение: " << res << endl;
-	cout << "абсолютная фактическая погрешность: " << fabs(res - exact) << endl << endl;
+	cout << "абсолютная фактическая погрешность: " << fabs(res - exact) << endl;
 }
 
 void middleRec(int m, double exact, double a, double b, double (*foo)(double)) {
@@ -72,7 +81,7 @@ void middleRec(int m, double exact, double a, double b, double (*foo)(double)) {
 	}
 	res *= h;
 	cout << "полученное значение: " << res << endl;
-	cout << "абсолютная фактическая погрешность: " << fabs(res - exact) << endl << endl;
+	cout << "абсолютная фактическая погрешность: " << fabs(res - exact) << endl;
 }
 
 void trap(int m, double exact, double a, double b, double (*foo)(double)) {
@@ -84,7 +93,7 @@ void trap(int m, double exact, double a, double b, double (*foo)(double)) {
 	}
 	res *= (h / 2);
 	cout << "полученное значение: " << res << endl;
-	cout << "абсолютная фактическая погрешность: " << fabs(res - exact) << endl << endl;
+	cout << "абсолютная фактическая погрешность: " << fabs(res - exact) << endl;
 }
 
 void Simpson(int m, double exact, double a, double b, double (*foo)(double)) {
@@ -99,9 +108,19 @@ void Simpson(int m, double exact, double a, double b, double (*foo)(double)) {
 	}
 	res *= (h / 6);
 	cout << "полученное значение: " << res << endl;
-	cout << "абсолютная фактическая погрешность: " << fabs(res - exact) << endl << endl;
+	cout << "абсолютная фактическая погрешность: " << fabs(res - exact) << endl;
 }
 
+double maxF(double a, double b, double (*foo)(double)) {
+	double x = a;
+	double h = (b - a) / 10000;
+	for (int i = 0; i <= 10000;++i) {
+		if (fabs(foo(x)) < fabs(foo(a + i * h))) {
+			x = a + i * h;
+		}
+	}
+	return fabs(foo(x));
+}
 
 int main() {
 	cout << setprecision(10);
@@ -132,12 +151,18 @@ int main() {
 	Simpson(m, f4, a, b, func4);
 
 	cout << endl << "ИНТЕГРИРОВАНИЕ ФУНКЦИИ f(x) = exp(3 * x) + sin(2 * x) + x " << endl;
-	
+
 	leftRec(m, f, a, b, func);
+	cout << "теоретическая оценка погрешности: " << pow(b-a, 2)/(2*m)*maxF(a,b,dfunc)<< endl<<endl;
 	rightRec(m, f, a, b, func);
+	cout << "теоретическая оценка погрешности: " << pow(b - a, 2) / (2 * m) * maxF(a, b, dfunc) << endl << endl;
 	middleRec(m, f, a, b, func);
+	cout << "теоретическая оценка погрешности: " << pow(b - a, 3) / (24 * m*m) * maxF(a, b, d2func) << endl << endl;
 	trap(m, f, a, b, func);
+	cout << "теоретическая оценка погрешности: " << pow(b - a, 3) / (12 * m * m) * maxF(a, b, d2func) << endl << endl;
 	Simpson(m, f, a, b, func);
+	cout << "теоретическая оценка погрешности: " << pow(b - a, 5) / (2880 * pow(m, 4)) * maxF(a, b, d4func) << endl << endl;
+
 
 	return 0;
 }
