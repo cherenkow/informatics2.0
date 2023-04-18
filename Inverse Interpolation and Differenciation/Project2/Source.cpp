@@ -241,20 +241,29 @@ double leftD(double h, double fx, double f1, double f2) {
 double rightD(double h, double fx, double f1, double f2) {
 	return ((3 * fx - 4 * f1 + f2) / (2 * h));
 }
+
+double secondD(double h, double f1, double fx, double f2) {
+	return ((f1+f2-2*fx)/(h*h));
+}
+double secondLD(double h, double f1, double f2, double f3, double f4) {
+	return ((2 * f1 - 5 * f2 + 4 * f3 - f4) / (h * h));
+}
+double secondRD(double h, double f1, double f2, double f3, double f4) {
+	return ((2 * f4 - 5 * f3 + 4 * f2 - f1) / (h * h));
+}
 void Differenciation() {
 	bool exit = true;
 	while (exit == true) {
 		cout << "Ââåäèòå êîëè÷åñòâî óçëîâ" << endl;
 		int m = 0;
 		cin >> m;
-		cout << "Ââåäèòå êîíöû îòðåçêà" << endl << endl;
+		cout << "Ââåäèòå íà÷àëüíóþ òî÷êó " << endl;
 		double a = 0;
-		double b = 0;
 		cin >> a;
-		cin >> b;
-
+		cout << "Ââåäèòå øàã " << endl;
+		double h = 0;
+		cin >> h;
 		double** tab = initMatrix(m, 8);
-		double h = (b - a) / (m - 1);
 		for (int i = 0; i < m; ++i) {
 			tab[i][0] = a + h * i;
 			tab[i][1] = Func(tab[i][0]);
@@ -265,18 +274,18 @@ void Differenciation() {
 		for (int i = 1; i < m - 1; ++i) {
 			tab[i][4] = centralD(h, tab[i - 1][1], tab[i + 1][1]);
 			tab[i][5] = fabs(tab[i][4] - tab[i][2]);
-			tab[i][6] = centralD(h, tab[i - 1][4], tab[i + 1][4]);
+			tab[i][6] = secondD(h, tab[i - 1][1], tab[i][1], tab[i + 1][1]);
 			tab[i][7] = fabs(tab[i][6] - tab[i][3]);
 		}
 		//first
 		tab[0][4] = leftD(h, tab[0][1], tab[1][1], tab[2][1]);
 		tab[0][5] = fabs(tab[0][4] - tab[0][2]);
-		tab[0][6] = leftD(h, tab[0][4], tab[1][4], tab[2][4]);
+		tab[0][6] = secondLD(h, tab[0][1], tab[1][1], tab[2][1], tab[3][1]);
 		tab[0][7] = fabs(tab[0][6] - tab[0][3]);
 		//last
 		tab[m - 1][4] = rightD(h, tab[m - 1][1], tab[m - 2][1], tab[m - 2][1]);
 		tab[m - 1][5] = fabs(tab[0][4] - tab[0][2]);
-		tab[m - 1][6] = rightD(h, tab[m - 1][4], tab[m - 2][4], tab[m - 3][4]);
+		tab[m - 1][6] = secondRD(h, tab[m - 4][1], tab[m - 3][1], tab[m - 2][1], tab[m - 1][1]);
 		tab[m - 1][7] = fabs(tab[0][6] - tab[0][3]);
 
 		cout << endl;
@@ -302,11 +311,11 @@ void Differenciation() {
 
 
 int main() {
-	cout << setprecision(10);
+	cout << setprecision(15);
 	setlocale(LC_ALL, "Russian");
 	cout << "ÇÀÄÀ×À ÎÁÐÀÒÍÎÃÎ ÈÍÒÅÐÏÎËÈÐÎÂÀÍÈß" << endl;
 	cout << "Âàðèàíò 11: Íåîáõîäèìî èíòåðïîëèðîâàòü ôóíêöèþ f(x) = sin(x) + x^2 / 2" << endl << endl;
-	InverseInterpolation();
+	//InverseInterpolation();
 	cout << endl << endl;
 	cout << "ÇÀÄÀ×À ×ÈÑËÅÍÍÎÃÎ ÄÈÔÔÅÐÅÍÖÈÐÎÂÀÍÈß" << endl;
 	cout << "Âàðèàíò 11: Íåîáõîäèìî ÷èñëåííî ïðîäèôôåðåíöèðîâàòü ôóíêöèþ f(x) = exp(3x)" << endl << endl;

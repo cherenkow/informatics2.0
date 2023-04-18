@@ -125,7 +125,7 @@ double maxF(double a, double b, double (*foo)(double)) {
 int main() {
 	cout << setprecision(10);
 	setlocale(LC_ALL, "Russian");
-	cout << "ЗАДАЧА ЧИСЛЕННОГО ИНТЕГРИРОВАНИЯ" << endl;
+	cout << "ЗАДАЧА ЧИСЛЕННОГО ИНТЕГРИРОВАНИЯ. СОСТАВНЫЕ КВАДРАТУРНЫЕ ФОРМУЛЫ" << endl;
 
 	cout << "введите концы отрещка интегрирования" << endl;
 	double a = 0;
@@ -153,15 +153,25 @@ int main() {
 	cout << endl << "ИНТЕГРИРОВАНИЕ ФУНКЦИИ f(x) = exp(3 * x) + sin(2 * x) + x " << endl;
 
 	leftRec(m, f, a, b, func);
+	cout << "фактическое значение: " << f << endl;
+
 	cout << "теоретическая оценка погрешности: " << pow(b-a, 2)/(2*m)*maxF(a,b,dfunc)<< endl<<endl;
 	rightRec(m, f, a, b, func);
+	cout << "фактическое значение: " << f << endl;
+
 	cout << "теоретическая оценка погрешности: " << pow(b - a, 2) / (2 * m) * maxF(a, b, dfunc) << endl << endl;
 	middleRec(m, f, a, b, func);
+	cout << "фактическое значение: " << f << endl;
+
 	cout << "теоретическая оценка погрешности: " << pow(b - a, 3) / (24 * m*m) * maxF(a, b, d2func) << endl << endl;
 	trap(m, f, a, b, func);
+	cout << "фактическое значение: " << f << endl;
+
 	cout << "теоретическая оценка погрешности: " << pow(b - a, 3) / (12 * m * m) * maxF(a, b, d2func) << endl << endl;
 	Simpson(m, f, a, b, func);
-	cout << "теоретическая оценка погрешности: " << pow(b - a, 5) / (2880 * pow(m, 4)) * maxF(a, b, d4func) << endl << endl;
+	cout << "фактическое значение: " << f << endl;
+
+	cout << "теоретическая оценка погрешности:m " << pow(b - a, 5) / (2880 * pow(m, 4)) * maxF(a, b, d4func) << endl << endl;
 
 
 	return 0;

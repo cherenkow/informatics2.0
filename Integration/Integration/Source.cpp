@@ -68,9 +68,9 @@ double threeEights(double a, double b, double (*foo)(double)) {
 int main() {
 	cout << setprecision(10);
 	setlocale(LC_ALL, "Russian");
-	cout << "ЗАДАЧА ЧИСЛЕННОГО ИНТЕГРИРОВАНИЯ" << endl;
+	cout << "ЗАДАЧА ЧИСЛЕННОГО ИНТЕГРИРОВАНИЯ. ПРОСТЕЙШИЕ КВАДРАТУРНЫЕ ФОРМУЛЫ" << endl;
 
-	cout << "введите концы отрещка интегрирования" << endl;
+	cout << "введите концы отрезка интегрирования" << endl;
 	double a = 0;
 	double b = 0;
 	cin >> a;
@@ -86,26 +86,35 @@ int main() {
 
 	cout << "формула левого прямоугольника" << endl;
 	double test1 = leftRec(a, b, func1);
+	cout << "многочлен: 1 " << test1 << endl;
 	cout << "полученное значение: " << test1 << endl;
 	cout << "абсолютная фактическая погрешность: " << fabs(test1 - f1) << endl << endl;
 
 	cout << "формула правого прямоугольника" << endl;
 	double test2 = rightRec(a, b, func1);
+	cout << "многочлен: " << test1 << endl;
+
 	cout << "полученное значение: " << test2 << endl;
-	cout << "абсолютная фактическая погрешность: " << fabs(test2 - f1) << endl << endl;
+	cout << "абсолютная фактическая погрешность: 1 " << fabs(test2 - f1) << endl << endl;
 
 	cout << "формула среднего прямоугольника" << endl;
 	double test3 = middleRec(a, b, func2);
+	cout << "многочлен:  2x +1 " << test1 << endl;
+
 	cout << "полученное значение: " << test3 << endl;
 	cout << "абсолютная фактическая погрешность: " << fabs(test3 - f2) << endl << endl;
 
 	cout << "формула трапеции" << endl;
 	double test4 = trap(a, b, func2);
+	cout << "многочлен:  2x +1  " << test1 << endl;
+
 	cout << "полученное значение: " << test4 << endl;
 	cout << "абсолютная фактическая погрешность: " << fabs(test4 - f2) << endl << endl;
 
 	cout << "формула Симпсона " << endl;
 	double test5 = Simpson(a, b, func4);
+	cout << "многочлен: 4х^3 + 3x^2 + 2x +1 " << test1 << endl;
+
 	cout << "полученное значение: " << test5 << endl;
 	cout << "абсолютная фактическая погрешность: " << fabs(test5 - f4) << endl << endl;
 
@@ -116,31 +125,43 @@ int main() {
 	cout << "формула левого прямоугольника" << endl;
 	ff = leftRec(a, b, func);
 	cout << "полученное значение: " << ff << endl;
+	cout << "фактическое значение: " << f << endl;
+
 	cout << "абсолютная фактическая погрешность: " << fabs(ff - f) << endl << endl;
 
 	cout << "формула правого прямоугольника" << endl;
     ff = rightRec(a, b, func);
 	cout << "полученное значение: " << ff << endl;
+	cout << "фактическое значение: " << f << endl;
+
 	cout << "абсолютная фактическая погрешность: " << fabs(ff - f) << endl << endl;
 
 	cout << "формула среднего прямоугольника" << endl;
 	ff = middleRec(a, b, func);
 	cout << "полученное значение: " << ff << endl;
+	cout << "фактическое значение: " << f << endl;
+
 	cout << "абсолютная фактическая погрешность: " << fabs(ff - f) << endl << endl;
 
 	cout << "формула трапеции" << endl;
 	ff = trap(a, b, func);
 	cout << "полученное значение: " << ff << endl;
+	cout << "фактическое значение: " << f << endl;
+
 	cout << "абсолютная фактическая погрешность: " << fabs(ff - f) << endl << endl;
 
 	cout << "формула Симпсона " << endl;
 	ff = Simpson(a, b, func);
 	cout << "полученное значение: " << ff << endl;
+	cout << "фактическое значение: " << f << endl;
+
 	cout << "абсолютная фактическая погрешность: " << fabs(ff - f) << endl << endl;
 
 	cout << "формула трех восьмых " << endl;
 	ff = threeEights(a, b, func);
 	cout << "полученное значение: " << ff << endl;
+	cout << "фактическое значение: " << f << endl;
+
 	cout << "абсолютная фактическая погрешность: " << fabs(ff - f) << endl << endl;
 
 	return 0;
