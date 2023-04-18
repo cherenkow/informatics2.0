@@ -299,7 +299,7 @@ void Differenciation() {
 			}
 			cout << endl;
 		}
-		//printMatrix(tab, m, 8);
+		
 		int ex = 0;
 		cout << "Íàæìèòå 1, åñëè õîòèòå âûáðàòü íîâóþ ñòåïåíü ìíîãî÷ëåíà è òî÷êó èíòåðïîëèðîâàíèÿ" << endl;
 		cout << "Íàæìèòå 0, ÷òîáû âûéòè èç ïðîãðàììû" << endl;
@@ -315,7 +315,7 @@ int main() {
 	setlocale(LC_ALL, "Russian");
 	cout << "ÇÀÄÀ×À ÎÁÐÀÒÍÎÃÎ ÈÍÒÅÐÏÎËÈÐÎÂÀÍÈß" << endl;
 	cout << "Âàðèàíò 11: Íåîáõîäèìî èíòåðïîëèðîâàòü ôóíêöèþ f(x) = sin(x) + x^2 / 2" << endl << endl;
-	//InverseInterpolation();
+	InverseInterpolation();
 	cout << endl << endl;
 	cout << "ÇÀÄÀ×À ×ÈÑËÅÍÍÎÃÎ ÄÈÔÔÅÐÅÍÖÈÐÎÂÀÍÈß" << endl;
 	cout << "Âàðèàíò 11: Íåîáõîäèìî ÷èñëåííî ïðîäèôôåðåíöèðîâàòü ôóíêöèþ f(x) = exp(3x)" << endl << endl;
